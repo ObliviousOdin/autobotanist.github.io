@@ -1,49 +1,572 @@
-<html>
-<style type="text/css">
-  .centered {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Autobotanist — Cultivating systems that grow</title>
+  <meta name="description" content="Autobotanist is the personal brand site of ObliviousOdin — agent harnesses, creative tooling, and grounded systems." />
+  <meta name="theme-color" content="#07090a" />
+  <meta property="og:title" content="Autobotanist" />
+  <meta property="og:description" content="Cultivating systems that grow. Agent harnesses, creative tooling, grounded systems." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary" />
+  <link rel="icon" href="autobotanist.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=IBM+Plex+Mono:wght@400;500&family=Syne:wght@500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #07090a;
+      --bg-elevated: #0e1214;
+      --bg-subtle: #141a1c;
+      --surface: #111618;
+      --fg: #e8eeef;
+      --muted: #8b989c;
+      --subtle: #5c6a6e;
+      --border: #1e282c;
+      --border-strong: #2a363b;
+      --primary: #1fa8a0;
+      --primary-fg: #041312;
+      --primary-soft: #143836;
+      --accent-glow: #2bc4ba;
+      --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+      --font-display: "Syne", ui-sans-serif, system-ui, sans-serif;
+      --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+      --radius-sm: 0.5rem;
+      --radius-md: 0.75rem;
+      --radius-lg: 1rem;
+      --radius-xl: 1.5rem;
+      --max: 72rem;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--fg);
+      min-height: 100dvh;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      background-image:
+        radial-gradient(ellipse 80% 50% at 50% -20%, color-mix(in oklab, var(--primary) 14%, transparent), transparent),
+        radial-gradient(ellipse 40% 30% at 100% 0%, color-mix(in oklab, var(--primary) 6%, transparent), transparent);
+      background-attachment: fixed;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    button, a.btn { cursor: pointer; font: inherit; }
+    ::selection { background: color-mix(in oklab, var(--primary) 35%, transparent); color: var(--fg); }
+    .wrap { width: min(100% - 2rem, var(--max)); margin-inline: auto; }
+    @media (min-width: 640px) { .wrap { width: min(100% - 3rem, var(--max)); } }
+    .font-display { font-family: var(--font-display); }
+    .font-mono { font-family: var(--font-mono); }
+    .text-balance { text-wrap: balance; }
+    .muted { color: var(--muted); }
+    .subtle { color: var(--subtle); }
+    .primary { color: var(--primary); }
+
+    /* Header */
+    .header {
+      position: fixed; inset-inline: 0; top: 0; z-index: 50;
+      transition: background .2s, border-color .2s, backdrop-filter .2s;
+      border-bottom: 1px solid transparent;
+    }
+    .header.is-scrolled, .header.is-open {
+      background: color-mix(in oklab, var(--bg) 85%, transparent);
+      backdrop-filter: blur(12px);
+      border-color: color-mix(in oklab, var(--border) 80%, transparent);
+    }
+    .header-inner {
+      height: 4rem; display: flex; align-items: center; justify-content: space-between;
+      width: min(100% - 2rem, var(--max)); margin-inline: auto;
+    }
+    @media (min-width: 640px) { .header-inner { width: min(100% - 3rem, var(--max)); } }
+    .brand { display: flex; align-items: center; gap: .75rem; }
+    .brand img { width: 2.25rem; height: 2.25rem; border-radius: var(--radius-sm); }
+    .brand span {
+      font-family: var(--font-display); font-size: .875rem; font-weight: 600;
+      letter-spacing: .18em; text-transform: uppercase;
+    }
+    .nav-desktop { display: none; align-items: center; gap: .25rem; }
+    @media (min-width: 768px) { .nav-desktop { display: flex; } }
+    .nav-desktop a:not(.btn) {
+      padding: .5rem .75rem; border-radius: var(--radius-sm);
+      font-size: .875rem; color: var(--muted); transition: color .15s;
+    }
+    .nav-desktop a:not(.btn):hover { color: var(--fg); }
+    .menu-btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 2.75rem; height: 2.75rem; border: 0; background: transparent; color: var(--fg);
+      border-radius: var(--radius-md);
+    }
+    @media (min-width: 768px) { .menu-btn { display: none; } }
+    .mobile-nav {
+      display: none; border-top: 1px solid var(--border);
+      background: color-mix(in oklab, var(--bg) 95%, transparent);
+      backdrop-filter: blur(12px); padding: 1rem;
+    }
+    .header.is-open .mobile-nav { display: block; }
+    @media (min-width: 768px) { .header.is-open .mobile-nav { display: none; } }
+    .mobile-nav a {
+      display: block; padding: .75rem; border-radius: var(--radius-md); font-size: 1rem;
+    }
+    .mobile-nav a:hover { background: var(--bg-subtle); }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+      height: 2.75rem; padding: 0 1.25rem; border-radius: var(--radius-md);
+      font-size: .875rem; font-weight: 500; border: 1px solid transparent;
+      transition: transform .15s, background .15s, border-color .15s, color .15s;
+    }
+    .btn:active { transform: scale(.98); }
+    .btn-lg { height: 3rem; padding: 0 1.75rem; font-size: 1rem; }
+    .btn-sm { height: 2.25rem; padding: 0 .875rem; font-size: .75rem; }
+    .btn-primary {
+      background: var(--primary); color: var(--primary-fg);
+      box-shadow: 0 0 0 1px color-mix(in oklab, var(--primary) 40%, transparent);
+    }
+    .btn-primary:hover { background: var(--accent-glow); }
+    .btn-secondary {
+      background: var(--bg-elevated); color: var(--fg); border-color: var(--border);
+    }
+    .btn-secondary:hover { border-color: var(--border-strong); background: var(--bg-subtle); }
+    .btn-outline {
+      background: transparent; color: var(--fg); border-color: var(--border-strong);
+    }
+    .btn-outline:hover { border-color: color-mix(in oklab, var(--primary) 50%, transparent); color: var(--primary); }
+
+    /* Hero */
+    .hero { position: relative; overflow: hidden; padding: 7rem 0 5rem; }
+    @media (min-width: 640px) { .hero { padding: 9rem 0 7rem; } }
+    .grid-lines {
+      pointer-events: none; position: absolute; inset: 0; opacity: .4;
+      background-image:
+        linear-gradient(to right, color-mix(in oklab, var(--border) 70%, transparent) 1px, transparent 1px),
+        linear-gradient(to bottom, color-mix(in oklab, var(--border) 70%, transparent) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black, transparent);
+    }
+    .hero-grid {
+      position: relative;
+      display: flex; flex-direction: column; gap: 2.5rem;
+    }
+    @media (min-width: 1024px) {
+      .hero-grid {
+        flex-direction: row; align-items: center; justify-content: space-between; gap: 4rem;
       }
-	  .dropdown {
-    position: relative;
-    display: inline-block;
-}
+    }
+    .pill {
+      display: inline-flex; align-items: center; gap: .5rem;
+      border: 1px solid var(--border); background: color-mix(in oklab, var(--bg-elevated) 80%, transparent);
+      border-radius: 999px; padding: .375rem .75rem; font-size: .75rem; font-weight: 500;
+      color: var(--muted); margin-bottom: 1.5rem;
+    }
+    .pill svg { width: .875rem; height: .875rem; color: var(--primary); }
+    h1 {
+      font-family: var(--font-display); font-weight: 600; letter-spacing: -0.03em;
+      font-size: clamp(2.25rem, 5vw, 3.75rem); line-height: 1.1;
+    }
+    h1 .line-primary { display: block; color: var(--primary); }
+    .hero-copy { max-width: 36rem; margin-top: 1.5rem; font-size: 1.0625rem; color: var(--muted); line-height: 1.65; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 2rem; }
+    .hero-card-wrap { position: relative; width: 100%; max-width: 24rem; margin-inline: auto; }
+    @media (min-width: 1024px) { .hero-card-wrap { margin-inline: 0; } }
+    .hero-glow {
+      position: absolute; inset: -2rem; border-radius: 999px;
+      background: color-mix(in oklab, var(--primary) 10%, transparent); filter: blur(48px);
+    }
+    .hero-card {
+      position: relative; border: 1px solid var(--border); background: color-mix(in oklab, var(--surface) 90%, transparent);
+      border-radius: var(--radius-xl); padding: 2rem;
+      box-shadow: 0 24px 80px -32px rgba(31, 168, 160, .45);
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+    }
+    .hero-card .logo { width: 10rem; height: 10rem; }
+    @media (min-width: 640px) { .hero-card .logo { width: 10rem; height: 10rem; } }
+    .hero-card .wordmark { margin-top: 1.5rem; width: min(100%, 15rem); height: auto; opacity: .95; }
+    .hero-card .meta {
+      margin-top: 1.25rem; font-family: var(--font-mono); font-size: .75rem;
+      letter-spacing: .12em; text-transform: uppercase; color: var(--subtle);
+    }
 
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    padding: 12px 16px;
-    z-index: 1;
-}
+    /* Sections */
+    section.band { border-top: 1px solid var(--border); padding: 5rem 0; scroll-margin-top: 5rem; }
+    @media (min-width: 640px) { section.band { padding: 6rem 0; } }
+    .band-soft { background: color-mix(in oklab, var(--bg-elevated) 50%, transparent); }
+    .eyebrow {
+      font-family: var(--font-mono); font-size: .75rem; letter-spacing: .2em;
+      text-transform: uppercase; color: var(--primary);
+    }
+    h2 {
+      font-family: var(--font-display); font-weight: 600; letter-spacing: -0.02em;
+      font-size: clamp(1.75rem, 3vw, 2.25rem); margin-top: .5rem; line-height: 1.15;
+    }
+    .section-head {
+      display: flex; flex-direction: column; gap: 1rem; margin-bottom: 3rem;
+    }
+    @media (min-width: 640px) {
+      .section-head { flex-direction: row; align-items: flex-end; justify-content: space-between; }
+    }
+    .section-desc { max-width: 36rem; margin-top: .75rem; color: var(--muted); }
 
-.dropdown:hover .dropdown-content {
-    display: block;
-}
+    /* Cards */
+    .grid-3 { display: grid; gap: 1rem; }
+    @media (min-width: 640px) { .grid-3 { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .grid-3 { grid-template-columns: repeat(3, 1fr); } }
+    .project-card {
+      display: flex; flex-direction: column; border: 1px solid var(--border);
+      background: var(--bg-elevated); border-radius: var(--radius-xl); padding: 1.25rem;
+      transition: border-color .2s, background .2s;
+    }
+    .project-card:hover { border-color: color-mix(in oklab, var(--primary) 40%, transparent); background: var(--bg-subtle); }
+    .project-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
+    .tag {
+      border: 1px solid var(--border); background: var(--bg); border-radius: 999px;
+      padding: .125rem .625rem; font-family: var(--font-mono); font-size: .6875rem;
+      letter-spacing: .04em; color: var(--muted);
+    }
+    .arrow { color: var(--subtle); transition: color .15s; }
+    .project-card:hover .arrow { color: var(--primary); }
+    .project-card h3 {
+      font-family: var(--font-display); font-size: 1.125rem; font-weight: 600;
+      transition: color .15s;
+    }
+    .project-card:hover h3 { color: var(--primary); }
+    .project-card p { margin-top: .5rem; font-size: .875rem; color: var(--muted); line-height: 1.6; flex: 1; }
+    .project-card .lang { margin-top: 1.25rem; font-family: var(--font-mono); font-size: .75rem; color: var(--subtle); }
 
-</style>
+    .focus-card, .principle-card {
+      border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 1.5rem;
+      background: var(--bg);
+    }
+    .principle-card { background: var(--surface); }
+    .icon-box {
+      width: 2.75rem; height: 2.75rem; display: flex; align-items: center; justify-content: center;
+      border: 1px solid var(--border); border-radius: var(--radius-md);
+      background: var(--primary-soft); color: var(--primary); margin-bottom: 1.25rem;
+    }
+    .icon-box svg { width: 1.25rem; height: 1.25rem; }
+    .focus-card h3, .principle-card h3 {
+      font-family: var(--font-display); font-size: 1.25rem; font-weight: 600;
+    }
+    .focus-card p, .principle-card p {
+      margin-top: .75rem; font-size: .875rem; color: var(--muted); line-height: 1.65;
+    }
+    .principle-num { font-family: var(--font-mono); font-size: .875rem; color: var(--primary); }
+    .principle-card h3 { margin-top: 1rem; }
 
- 
-  <header><p class="centered">
-     <img src="autobotanist.png" alt="autobotanist" align="middle">
-     <img src="autobotanist_name.png" alt="autobotanist" align="middle">
-  </p></header>
+    /* About */
+    .about-grid {
+      display: grid; gap: 2.5rem;
+    }
+    @media (min-width: 1024px) {
+      .about-grid { grid-template-columns: 1.1fr .9fr; align-items: center; }
+    }
+    .about-grid p { margin-top: 1rem; color: var(--muted); line-height: 1.7; }
+    .quote {
+      border: 1px solid color-mix(in oklab, var(--primary) 25%, transparent);
+      background: color-mix(in oklab, var(--primary-soft) 40%, transparent);
+      border-radius: var(--radius-xl); padding: 2rem;
+    }
+    .quote svg { width: 1.5rem; height: 1.5rem; color: var(--primary); margin-bottom: 1.25rem; }
+    .quote p {
+      font-family: var(--font-display); font-size: clamp(1.25rem, 2vw, 1.5rem);
+      font-weight: 500; line-height: 1.35; color: var(--fg); margin: 0;
+    }
+    .quote footer {
+      margin-top: 1.5rem; font-family: var(--font-mono); font-size: .75rem;
+      letter-spacing: .08em; text-transform: uppercase; color: var(--muted);
+    }
+
+    /* CTA */
+    .cta-panel {
+      position: relative; overflow: hidden; border: 1px solid var(--border);
+      background: var(--bg-elevated); border-radius: var(--radius-xl);
+      padding: 3rem 1.5rem; text-align: center;
+    }
+    @media (min-width: 640px) { .cta-panel { padding: 4rem 3rem; } }
+    .cta-glow {
+      pointer-events: none; position: absolute; inset: 0; opacity: .5;
+      background: radial-gradient(ellipse 60% 80% at 50% 100%, color-mix(in oklab, var(--primary) 18%, transparent), transparent);
+    }
+    .cta-panel .inner { position: relative; }
+    .cta-panel p { max-width: 28rem; margin: 1rem auto 0; color: var(--muted); }
+    .cta-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: .75rem; margin-top: 2rem; }
+
+    /* Footer */
+    footer.site-footer {
+      border-top: 1px solid var(--border); background: var(--bg-elevated);
+      padding: 2.5rem 0;
+    }
+    .footer-inner {
+      display: flex; flex-direction: column; gap: 1.5rem;
+    }
+    @media (min-width: 640px) {
+      .footer-inner { flex-direction: row; align-items: center; justify-content: space-between; }
+    }
+    .footer-brand { display: flex; align-items: center; gap: .75rem; }
+    .footer-brand img { width: 2rem; height: 2rem; }
+    .footer-brand strong {
+      display: block; font-family: var(--font-display); font-size: .875rem; font-weight: 600;
+    }
+    .footer-brand span { font-size: .75rem; color: var(--muted); }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 1rem; font-size: .875rem; color: var(--muted); }
+    .footer-links a:hover { color: var(--primary); }
+
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+  </style>
+</head>
 <body>
-  <div class="dropdown">
-  <span>Home</span>
-  <div class="dropdown-content">
-    <p>Ok you gonna click now ?</p>
-  </div>
-</div>
+  <header class="header" id="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#top">
+        <img src="autobotanist.png" alt="" width="36" height="36" />
+        <span>Autobotanist</span>
+      </a>
+      <nav class="nav-desktop" aria-label="Primary">
+        <a href="#work">Work</a>
+        <a href="#focus">Focus</a>
+        <a href="#principles">Principles</a>
+        <a href="#about">About</a>
+        <a class="btn btn-primary btn-sm" style="margin-left:.5rem" href="https://github.com/ObliviousOdin" target="_blank" rel="noreferrer">GitHub</a>
+      </nav>
+      <button class="menu-btn" id="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu">
+        <svg id="icon-menu" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <svg id="icon-close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <nav class="mobile-nav wrap" id="mobile-nav" aria-label="Mobile">
+      <a href="#work">Work</a>
+      <a href="#focus">Focus</a>
+      <a href="#principles">Principles</a>
+      <a href="#about">About</a>
+      <a class="btn btn-primary" style="width:100%;margin-top:.5rem" href="https://github.com/ObliviousOdin" target="_blank" rel="noreferrer">Open GitHub</a>
+    </nav>
+  </header>
 
- </body>
+  <main id="top">
+    <section class="hero">
+      <div class="grid-lines" aria-hidden="true"></div>
+      <div class="wrap hero-grid">
+        <div>
+          <div class="pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+            Personal systems lab
+          </div>
+          <h1 class="text-balance">
+            Cultivating systems
+            <span class="line-primary">that grow.</span>
+          </h1>
+          <p class="hero-copy">
+            Autobotanist is the public face of ObliviousOdin—building agent harnesses, creative tools, and grounded software from first principles.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary btn-lg" href="#work">Explore work <span aria-hidden="true">↗</span></a>
+            <a class="btn btn-secondary btn-lg" href="https://github.com/ObliviousOdin" target="_blank" rel="noreferrer">View on GitHub</a>
+          </div>
+        </div>
+        <div class="hero-card-wrap">
+          <div class="hero-glow" aria-hidden="true"></div>
+          <div class="hero-card">
+            <img class="logo" src="autobotanist.png" alt="Autobotanist monogram" width="160" height="160" />
+            <img class="wordmark" src="autobotanist_name.png" alt="Autobotanist" width="280" height="35" />
+            <p class="meta">ObliviousOdin · MrGoat</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-</html>
+    <section class="band" id="work">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Selected work</p>
+            <h2>Public repositories</h2>
+            <p class="section-desc">Recent open projects across Fabric tooling, agent harnesses, creative skills, and research code.</p>
+          </div>
+          <a class="btn btn-outline" href="https://github.com/ObliviousOdin?tab=repositories" target="_blank" rel="noreferrer">All repos ↗</a>
+        </div>
+        <div class="grid-3">
+          <a class="project-card" href="https://github.com/ObliviousOdin/fabric-profile-market" target="_blank" rel="noreferrer">
+            <div class="project-top"><span class="tag">Fabric</span><span class="arrow" aria-hidden="true">↗</span></div>
+            <h3>fabric-profile-market</h3>
+            <p>Standalone Fabric profile distributions and collection manager.</p>
+            <span class="lang">Python</span>
+          </a>
+          <a class="project-card" href="https://github.com/ObliviousOdin/fabric-studio" target="_blank" rel="noreferrer">
+            <div class="project-top"><span class="tag">Video</span><span class="arrow" aria-hidden="true">↗</span></div>
+            <h3>fabric-studio</h3>
+            <p>Standalone Fabric video composition workspace plugin.</p>
+            <span class="lang">Python</span>
+          </a>
+          <a class="project-card" href="https://github.com/ObliviousOdin/obliviousodin-gtm-harness" target="_blank" rel="noreferrer">
+            <div class="project-top"><span class="tag">GTM</span><span class="arrow" aria-hidden="true">↗</span></div>
+            <h3>obliviousodin-gtm-harness</h3>
+            <p>Ever-learning GTM agent harness—skills, playbooks, and continuous strategy updates.</p>
+            <span class="lang">Agent</span>
+          </a>
+          <a class="project-card" href="https://github.com/ObliviousOdin/foundational-comic-skills" target="_blank" rel="noreferrer">
+            <div class="project-top"><span class="tag">Creative</span><span class="arrow" aria-hidden="true">↗</span></div>
+            <h3>foundational-comic-skills</h3>
+            <p>Retro hand-inked manga experiments and prompt engineering for comic craft.</p>
+            <span class="lang">Python</span>
+          </a>
+          <a class="project-card" href="https://github.com/ObliviousOdin/primemanifold-agentic" target="_blank" rel="noreferrer">
+            <div class="project-top"><span class="tag">Robotics</span><span class="arrow" aria-hidden="true">↗</span></div>
+            <h3>primemanifold-agentic</h3>
+            <p>Hierarchical multi-agent robotics framework with security-first design.</p>
+            <span class="lang">Agent</span>
+          </a>
+          <a class="project-card" href="https://github.com/ObliviousOdin/verifiers" target="_blank" rel="noreferrer">
+            <div class="project-top"><span class="tag">RL</span><span class="arrow" aria-hidden="true">↗</span></div>
+            <h3>verifiers</h3>
+            <p>Verifiers for LLM reinforcement learning.</p>
+            <span class="lang">ML</span>
+          </a>
+        </div>
+      </div>
+    </section>
 
- </body>
+    <section class="band band-soft" id="focus">
+      <div class="wrap">
+        <p class="eyebrow">Focus</p>
+        <h2>Where the work compounds</h2>
+        <div class="grid-3" style="margin-top:3rem">
+          <article class="focus-card">
+            <div class="icon-box" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2M20 14h2M15 13v2M9 13v2"/></svg>
+            </div>
+            <h3>Agent harnesses</h3>
+            <p>Long-horizon multi-agent frameworks, GTM skill systems, and self-improving loops designed for real work—not demos.</p>
+          </article>
+          <article class="focus-card">
+            <div class="icon-box" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>
+            </div>
+            <h3>Creative tooling</h3>
+            <p>Fabric video composition, profile markets, and comic craft pipelines that treat generation as a discipline.</p>
+          </article>
+          <article class="focus-card">
+            <div class="icon-box" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2M15 20v2M2 15h2M2 9h2M20 15h2M20 9h2M9 2v2M9 20v2"/></svg>
+            </div>
+            <h3>Grounded systems</h3>
+            <p>From Arduino sensors to robotics-adjacent agent stacks—software that stays connected to the physical world.</p>
+          </article>
+        </div>
+      </div>
+    </section>
 
+    <section class="band" id="principles">
+      <div class="wrap">
+        <p class="eyebrow">Principles</p>
+        <h2>How Autobotanist thinks</h2>
+        <div class="grid-3" style="margin-top:3rem">
+          <article class="principle-card">
+            <span class="principle-num">01</span>
+            <h3>Grow from roots</h3>
+            <p>Hardware, sensors, and constraint-aware design came first. Abstraction without roots collapses.</p>
+          </article>
+          <article class="principle-card">
+            <span class="principle-num">02</span>
+            <h3>Train the mind</h3>
+            <p>Muscle funds the mind. Capital, focus, and craft should compound into clearer systems.</p>
+          </article>
+          <article class="principle-card">
+            <span class="principle-num">03</span>
+            <h3>Ship living systems</h3>
+            <p>Agents, harnesses, and tools that learn in production beat static prototypes every time.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" id="about">
+      <div class="wrap about-grid">
+        <div>
+          <p class="eyebrow">About</p>
+          <h2>Roots in hardware.<br /><span class="muted">Canopy in agents.</span></h2>
+          <p>Autobotanist started as a quiet GitHub Pages sketch and a monogram. The name stuck: cultivate carefully, automate what should compound, leave room for craft.</p>
+          <p>Today the same handle spans video tooling, GTM agent systems, comic research, RL verifiers, and older Arduino experiments—one continuous garden of systems work.</p>
+        </div>
+        <blockquote class="quote">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M11 9h4a2 2 0 0 0 2-2V5"/><circle cx="9" cy="9" r="2"/><path d="M7 21v-4a2 2 0 0 1 2-2h4"/><circle cx="15" cy="15" r="2"/></svg>
+          <p class="text-balance">“Every dollar tied to muscle must eventually find its way to mind, or both will atrophy.”</p>
+          <footer>— MrGoat / ObliviousOdin</footer>
+        </blockquote>
+      </div>
+    </section>
+
+    <section class="band">
+      <div class="wrap">
+        <div class="cta-panel">
+          <div class="cta-glow" aria-hidden="true"></div>
+          <div class="inner">
+            <h2>Build with Autobotanist</h2>
+            <p>Explore the public repos, fork what is useful, and follow the work as it grows.</p>
+            <div class="cta-actions">
+              <a class="btn btn-primary btn-lg" href="https://github.com/ObliviousOdin" target="_blank" rel="noreferrer">github.com/ObliviousOdin ↗</a>
+              <a class="btn btn-secondary btn-lg" href="#work">Browse projects</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <div class="footer-brand">
+        <img src="autobotanist.png" alt="" width="32" height="32" />
+        <div>
+          <strong>Autobotanist</strong>
+          <span>ObliviousOdin · MrGoat</span>
+        </div>
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/ObliviousOdin" target="_blank" rel="noreferrer">github.com/ObliviousOdin</a>
+        <span>© 2026</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var header = document.getElementById("site-header");
+      var toggle = document.getElementById("menu-toggle");
+      var iconMenu = document.getElementById("icon-menu");
+      var iconClose = document.getElementById("icon-close");
+      var open = false;
+
+      function setOpen(next) {
+        open = next;
+        header.classList.toggle("is-open", open);
+        toggle.setAttribute("aria-expanded", open ? "true" : "false");
+        toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+        iconMenu.style.display = open ? "none" : "block";
+        iconClose.style.display = open ? "block" : "none";
+        document.body.style.overflow = open ? "hidden" : "";
+      }
+
+      toggle.addEventListener("click", function () { setOpen(!open); });
+      document.querySelectorAll("#mobile-nav a").forEach(function (a) {
+        a.addEventListener("click", function () { setOpen(false); });
+      });
+
+      function onScroll() {
+        header.classList.toggle("is-scrolled", window.scrollY > 12);
+      }
+      onScroll();
+      window.addEventListener("scroll", onScroll, { passive: true });
+    })();
+  </script>
+</body>
 </html>
