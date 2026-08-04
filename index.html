@@ -2,44 +2,47 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Autobotanist — Cultivating systems that grow</title>
-  <meta name="description" content="Autobotanist is the personal brand site of ObliviousOdin — agent harnesses, creative tooling, and grounded systems." />
-  <meta name="theme-color" content="#07090a" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Autobotanist — Fresh local food as the universal standard</title>
+  <meta name="description" content="Public Benefit platform for food sovereignty: IoT hydro grow data, nutrients & light automation, open recipes, and a 5-mile marketplace for local vendors." />
+  <meta name="theme-color" content="#2a4f38" />
   <meta property="og:title" content="Autobotanist" />
-  <meta property="og:description" content="Cultivating systems that grow. Agent harnesses, creative tooling, grounded systems." />
+  <meta property="og:description" content="Fresh, local food as the universal standard. Connected agriculture, IoT grow hub, and 5miles for Farmers." />
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary" />
   <link rel="icon" href="autobotanist.png" type="image/png" />
+  <link rel="apple-touch-icon" href="autobotanist.png" />
+  <link rel="manifest" href="manifest.webmanifest" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=IBM+Plex+Mono:wght@400;500&family=Syne:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #07090a;
-      --bg-elevated: #0e1214;
-      --bg-subtle: #141a1c;
-      --surface: #111618;
-      --fg: #e8eeef;
-      --muted: #8b989c;
-      --subtle: #5c6a6e;
-      --border: #1e282c;
-      --border-strong: #2a363b;
-      --primary: #1fa8a0;
-      --primary-fg: #041312;
-      --primary-soft: #143836;
-      --accent-glow: #2bc4ba;
+      --bg: #f4f1ea;
+      --surface: #fffcf7;
+      --surface-2: #ebe6db;
+      --surface-3: #ddd6c8;
+      --fg: #1a2419;
+      --muted: #5c6b5a;
+      --subtle: #7a8878;
+      --border: color-mix(in oklab, #1a2419 12%, transparent);
+      --primary: #2a4f38;
+      --primary-fg: #f4f1ea;
+      --leaf: #3d7a52;
+      --sensor: #2a6b6b;
+      --success: #2f6b45;
+      --warn: #9a6b2f;
+      --danger: #9b3b3b;
       --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
-      --font-display: "Syne", ui-sans-serif, system-ui, sans-serif;
+      --font-display: "Fraunces", Georgia, serif;
       --font-mono: "IBM Plex Mono", ui-monospace, monospace;
-      --radius-sm: 0.5rem;
-      --radius-md: 0.75rem;
-      --radius-lg: 1rem;
-      --radius-xl: 1.5rem;
+      --radius: 1rem;
       --max: 72rem;
+      --header-h: 4rem;
+      --shadow: 0 8px 24px color-mix(in oklab, #1a2419 8%, transparent);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 1rem); }
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -49,524 +52,1254 @@
       background: var(--bg);
       color: var(--fg);
       min-height: 100dvh;
-      line-height: 1.5;
+      line-height: 1.55;
       -webkit-font-smoothing: antialiased;
-      background-image:
-        radial-gradient(ellipse 80% 50% at 50% -20%, color-mix(in oklab, var(--primary) 14%, transparent), transparent),
-        radial-gradient(ellipse 40% 30% at 100% 0%, color-mix(in oklab, var(--primary) 6%, transparent), transparent);
-      background-attachment: fixed;
+      text-wrap: pretty;
+      padding-bottom: 4.5rem;
     }
+    @media (min-width: 900px) { body { padding-bottom: 0; } }
+    h1,h2,h3,h4 { font-family: var(--font-display); text-wrap: balance; letter-spacing: -0.02em; font-weight: 600; line-height: 1.15; }
     a { color: inherit; text-decoration: none; }
     img { display: block; max-width: 100%; }
-    button, a.btn { cursor: pointer; font: inherit; }
-    ::selection { background: color-mix(in oklab, var(--primary) 35%, transparent); color: var(--fg); }
+    button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+    ::selection { background: color-mix(in oklab, var(--primary) 22%, transparent); }
     .wrap { width: min(100% - 2rem, var(--max)); margin-inline: auto; }
     @media (min-width: 640px) { .wrap { width: min(100% - 3rem, var(--max)); } }
-    .font-display { font-family: var(--font-display); }
-    .font-mono { font-family: var(--font-mono); }
-    .text-balance { text-wrap: balance; }
     .muted { color: var(--muted); }
     .subtle { color: var(--subtle); }
-    .primary { color: var(--primary); }
+    .tabular { font-variant-numeric: tabular-nums; font-family: var(--font-mono); }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
 
     /* Header */
     .header {
-      position: fixed; inset-inline: 0; top: 0; z-index: 50;
-      transition: background .2s, border-color .2s, backdrop-filter .2s;
-      border-bottom: 1px solid transparent;
-    }
-    .header.is-scrolled, .header.is-open {
-      background: color-mix(in oklab, var(--bg) 85%, transparent);
+      position: sticky; top: 0; z-index: 50;
+      height: var(--header-h);
+      border-bottom: 1px solid var(--border);
+      background: color-mix(in oklab, var(--surface) 90%, transparent);
       backdrop-filter: blur(12px);
-      border-color: color-mix(in oklab, var(--border) 80%, transparent);
     }
     .header-inner {
-      height: 4rem; display: flex; align-items: center; justify-content: space-between;
-      width: min(100% - 2rem, var(--max)); margin-inline: auto;
+      height: 100%;
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
     }
-    @media (min-width: 640px) { .header-inner { width: min(100% - 3rem, var(--max)); } }
-    .brand { display: flex; align-items: center; gap: .75rem; }
-    .brand img { width: 2.25rem; height: 2.25rem; border-radius: var(--radius-sm); }
-    .brand span {
-      font-family: var(--font-display); font-size: .875rem; font-weight: 600;
-      letter-spacing: .18em; text-transform: uppercase;
+    .brand { display: flex; align-items: center; gap: 0.65rem; min-width: 0; }
+    .brand img { width: 2.25rem; height: 2.25rem; border-radius: 0.7rem; object-fit: cover; box-shadow: 0 1px 2px color-mix(in oklab,#1a2419 10%,transparent); }
+    .brand-text strong { display: block; font-family: var(--font-display); font-size: 1rem; line-height: 1.1; }
+    .brand-text span { display: block; font-size: 0.68rem; color: var(--muted); margin-top: 0.15rem; }
+    .nav-desktop { display: none; align-items: center; gap: 0.15rem; }
+    @media (min-width: 900px) { .nav-desktop { display: flex; } }
+    .nav-desktop a {
+      padding: 0.5rem 0.7rem; border-radius: 0.55rem; font-size: 0.875rem; font-weight: 500; color: var(--muted);
+      transition: background .15s, color .15s;
     }
-    .nav-desktop { display: none; align-items: center; gap: .25rem; }
-    @media (min-width: 768px) { .nav-desktop { display: flex; } }
-    .nav-desktop a:not(.btn) {
-      padding: .5rem .75rem; border-radius: var(--radius-sm);
-      font-size: .875rem; color: var(--muted); transition: color .15s;
-    }
-    .nav-desktop a:not(.btn):hover { color: var(--fg); }
+    .nav-desktop a:hover, .nav-desktop a.active { background: color-mix(in oklab, var(--primary) 10%, transparent); color: var(--primary); }
     .menu-btn {
       display: inline-flex; align-items: center; justify-content: center;
-      width: 2.75rem; height: 2.75rem; border: 0; background: transparent; color: var(--fg);
-      border-radius: var(--radius-md);
+      width: 2.75rem; height: 2.75rem; border-radius: 0.7rem;
     }
-    @media (min-width: 768px) { .menu-btn { display: none; } }
+    .menu-btn:hover { background: var(--surface-2); }
+    @media (min-width: 900px) { .menu-btn { display: none; } }
     .mobile-nav {
-      display: none; border-top: 1px solid var(--border);
-      background: color-mix(in oklab, var(--bg) 95%, transparent);
-      backdrop-filter: blur(12px); padding: 1rem;
+      display: none; border-bottom: 1px solid var(--border); background: var(--surface); padding: 0.75rem 0 1rem;
     }
-    .header.is-open .mobile-nav { display: block; }
-    @media (min-width: 768px) { .header.is-open .mobile-nav { display: none; } }
+    .mobile-nav.open { display: block; }
     .mobile-nav a {
-      display: block; padding: .75rem; border-radius: var(--radius-md); font-size: 1rem;
+      display: flex; align-items: center; height: 2.75rem; padding: 0 1rem; border-radius: 0.7rem;
+      font-size: 0.9rem; font-weight: 500;
     }
-    .mobile-nav a:hover { background: var(--bg-subtle); }
+    .mobile-nav a:hover { background: var(--surface-2); }
 
-    /* Buttons */
+    /* Bottom nav mobile */
+    .bottom-nav {
+      position: fixed; inset-inline: 0; bottom: 0; z-index: 50;
+      border-top: 1px solid var(--border);
+      background: color-mix(in oklab, var(--surface) 95%, transparent);
+      backdrop-filter: blur(12px);
+      padding-bottom: max(0.35rem, env(safe-area-inset-bottom));
+    }
+    @media (min-width: 900px) { .bottom-nav { display: none; } }
+    .bottom-nav-inner {
+      display: grid; grid-template-columns: repeat(5, 1fr); max-width: 32rem; margin: 0 auto; gap: 0.15rem; padding: 0.25rem 0.35rem 0;
+    }
+    .bottom-nav a {
+      display: flex; flex-direction: column; align-items: center; gap: 0.15rem;
+      padding: 0.45rem 0.15rem; font-size: 0.62rem; font-weight: 500; color: var(--muted); border-radius: 0.5rem;
+    }
+    .bottom-nav a.active { color: var(--primary); }
+    .bottom-nav svg { width: 1.2rem; height: 1.2rem; }
+
+    /* UI bits */
+    .badge {
+      display: inline-flex; align-items: center; border-radius: 999px;
+      padding: 0.2rem 0.65rem; font-size: 0.72rem; font-weight: 500; border: 1px solid transparent;
+    }
+    .badge-soft { background: color-mix(in oklab, var(--primary) 10%, transparent); color: var(--primary); }
+    .badge-outline { border-color: var(--border); color: var(--fg); background: transparent; }
+    .badge-sensor { background: color-mix(in oklab, var(--sensor) 12%, transparent); color: var(--sensor); }
+    .badge-success { background: color-mix(in oklab, var(--success) 12%, transparent); color: var(--success); }
+    .badge-warn { background: color-mix(in oklab, var(--warn) 15%, transparent); color: var(--warn); }
+    .badge-danger { background: color-mix(in oklab, var(--danger) 12%, transparent); color: var(--danger); }
+    .badge-secondary { background: var(--surface-2); color: var(--muted); border-color: var(--border); }
+
     .btn {
-      display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
-      height: 2.75rem; padding: 0 1.25rem; border-radius: var(--radius-md);
-      font-size: .875rem; font-weight: 500; border: 1px solid transparent;
-      transition: transform .15s, background .15s, border-color .15s, color .15s;
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.45rem;
+      height: 2.75rem; padding: 0 1.1rem; border-radius: 0.7rem; font-size: 0.9rem; font-weight: 500;
+      transition: opacity .15s, transform .15s, background .15s;
     }
-    .btn:active { transform: scale(.98); }
-    .btn-lg { height: 3rem; padding: 0 1.75rem; font-size: 1rem; }
-    .btn-sm { height: 2.25rem; padding: 0 .875rem; font-size: .75rem; }
-    .btn-primary {
-      background: var(--primary); color: var(--primary-fg);
-      box-shadow: 0 0 0 1px color-mix(in oklab, var(--primary) 40%, transparent);
+    .btn:active { transform: scale(0.98); }
+    .btn-primary { background: var(--primary); color: var(--primary-fg); }
+    .btn-primary:hover { opacity: 0.92; }
+    .btn-secondary { background: var(--surface-2); color: var(--fg); border: 1px solid var(--border); }
+    .btn-secondary:hover { background: var(--surface-3); }
+    .btn-soft { background: color-mix(in oklab, var(--primary) 10%, transparent); color: var(--primary); }
+    .btn-soft:hover { background: color-mix(in oklab, var(--primary) 15%, transparent); }
+    .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--fg); }
+    .btn-outline:hover { background: var(--surface-2); }
+    .btn-sm { height: 2.25rem; padding: 0 0.8rem; font-size: 0.8rem; border-radius: 0.55rem; }
+    .btn-lg { height: 3rem; padding: 0 1.35rem; font-size: 1rem; border-radius: 0.85rem; }
+    .btn-ghost { background: transparent; color: var(--primary); padding-inline: 0; height: auto; }
+    .btn-ghost:hover { opacity: 0.85; }
+
+    .card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 1.25rem;
+      box-shadow: 0 1px 2px color-mix(in oklab, #1a2419 5%, transparent);
     }
-    .btn-primary:hover { background: var(--accent-glow); }
-    .btn-secondary {
-      background: var(--bg-elevated); color: var(--fg); border-color: var(--border);
-    }
-    .btn-secondary:hover { border-color: var(--border-strong); background: var(--bg-subtle); }
-    .btn-outline {
-      background: transparent; color: var(--fg); border-color: var(--border-strong);
-    }
-    .btn-outline:hover { border-color: color-mix(in oklab, var(--primary) 50%, transparent); color: var(--primary); }
+    .section { padding: 3.5rem 0; }
+    .section-tight { padding: 2.5rem 0; }
+    .section-surface { background: var(--surface); border-block: 1px solid var(--border); }
 
     /* Hero */
-    .hero { position: relative; overflow: hidden; padding: 7rem 0 5rem; }
-    @media (min-width: 640px) { .hero { padding: 9rem 0 7rem; } }
-    .grid-lines {
-      pointer-events: none; position: absolute; inset: 0; opacity: .4;
-      background-image:
-        linear-gradient(to right, color-mix(in oklab, var(--border) 70%, transparent) 1px, transparent 1px),
-        linear-gradient(to bottom, color-mix(in oklab, var(--border) 70%, transparent) 1px, transparent 1px);
-      background-size: 48px 48px;
-      mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black, transparent);
+    .hero {
+      position: relative; overflow: hidden;
+      border-bottom: 1px solid var(--border);
+      background:
+        radial-gradient(1200px 500px at 10% -10%, color-mix(in oklab, var(--leaf) 14%, transparent), transparent 55%),
+        radial-gradient(900px 420px at 90% 0%, color-mix(in oklab, var(--sensor) 10%, transparent), transparent 50%),
+        var(--bg);
     }
     .hero-grid {
-      position: relative;
-      display: flex; flex-direction: column; gap: 2.5rem;
+      display: grid; gap: 2.5rem; padding: 3.25rem 0 3.75rem;
+      align-items: center;
     }
-    @media (min-width: 1024px) {
-      .hero-grid {
-        flex-direction: row; align-items: center; justify-content: space-between; gap: 4rem;
-      }
+    @media (min-width: 960px) {
+      .hero-grid { grid-template-columns: 1.15fr 0.85fr; padding: 4.5rem 0; }
     }
-    .pill {
-      display: inline-flex; align-items: center; gap: .5rem;
-      border: 1px solid var(--border); background: color-mix(in oklab, var(--bg-elevated) 80%, transparent);
-      border-radius: 999px; padding: .375rem .75rem; font-size: .75rem; font-weight: 500;
-      color: var(--muted); margin-bottom: 1.5rem;
+    .hero h1 {
+      margin-top: 1rem; font-size: clamp(2.1rem, 4.5vw, 3.15rem);
     }
-    .pill svg { width: .875rem; height: .875rem; color: var(--primary); }
-    h1 {
-      font-family: var(--font-display); font-weight: 600; letter-spacing: -0.03em;
-      font-size: clamp(2.25rem, 5vw, 3.75rem); line-height: 1.1;
+    .hero-lead { margin-top: 1.15rem; max-width: 36rem; font-size: clamp(1rem, 1.6vw, 1.125rem); color: var(--muted); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 1.75rem; }
+    .stats {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.7rem;
+      margin-top: 2.25rem; max-width: 24rem;
     }
-    h1 .line-primary { display: block; color: var(--primary); }
-    .hero-copy { max-width: 36rem; margin-top: 1.5rem; font-size: 1.0625rem; color: var(--muted); line-height: 1.65; }
-    .hero-actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 2rem; }
-    .hero-card-wrap { position: relative; width: 100%; max-width: 24rem; margin-inline: auto; }
-    @media (min-width: 1024px) { .hero-card-wrap { margin-inline: 0; } }
-    .hero-glow {
-      position: absolute; inset: -2rem; border-radius: 999px;
-      background: color-mix(in oklab, var(--primary) 10%, transparent); filter: blur(48px);
+    .stat {
+      border: 1px solid var(--border); background: color-mix(in oklab, var(--surface) 80%, transparent);
+      border-radius: 0.85rem; padding: 0.7rem 0.75rem;
     }
-    .hero-card {
-      position: relative; border: 1px solid var(--border); background: color-mix(in oklab, var(--surface) 90%, transparent);
-      border-radius: var(--radius-xl); padding: 2rem;
-      box-shadow: 0 24px 80px -32px rgba(31, 168, 160, .45);
-      display: flex; flex-direction: column; align-items: center; text-align: center;
-    }
-    .hero-card .logo { width: 10rem; height: 10rem; }
-    @media (min-width: 640px) { .hero-card .logo { width: 10rem; height: 10rem; } }
-    .hero-card .wordmark { margin-top: 1.5rem; width: min(100%, 15rem); height: auto; opacity: .95; }
-    .hero-card .meta {
-      margin-top: 1.25rem; font-family: var(--font-mono); font-size: .75rem;
-      letter-spacing: .12em; text-transform: uppercase; color: var(--subtle);
-    }
+    .stat dt { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
+    .stat dd { margin-top: 0.25rem; font-size: 1.25rem; font-weight: 500; }
 
-    /* Sections */
-    section.band { border-top: 1px solid var(--border); padding: 5rem 0; scroll-margin-top: 5rem; }
-    @media (min-width: 640px) { section.band { padding: 6rem 0; } }
-    .band-soft { background: color-mix(in oklab, var(--bg-elevated) 50%, transparent); }
-    .eyebrow {
-      font-family: var(--font-mono); font-size: .75rem; letter-spacing: .2em;
-      text-transform: uppercase; color: var(--primary);
+    .snap-head {
+      background: var(--primary); color: var(--primary-fg);
+      padding: 1rem 1.2rem; border-bottom: 1px solid color-mix(in oklab, #000 10%, transparent);
+      border-radius: 1.25rem 1.25rem 0 0;
     }
-    h2 {
-      font-family: var(--font-display); font-weight: 600; letter-spacing: -0.02em;
-      font-size: clamp(1.75rem, 3vw, 2.25rem); margin-top: .5rem; line-height: 1.15;
-    }
-    .section-head {
-      display: flex; flex-direction: column; gap: 1rem; margin-bottom: 3rem;
-    }
-    @media (min-width: 640px) {
-      .section-head { flex-direction: row; align-items: flex-end; justify-content: space-between; }
-    }
-    .section-desc { max-width: 36rem; margin-top: .75rem; color: var(--muted); }
+    .snap-head p { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.8; font-weight: 500; }
+    .snap-head h3 { margin-top: 0.25rem; font-size: 1.2rem; }
+    .snap-body { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; padding: 1.2rem; }
+    .snap-cell { background: color-mix(in oklab, var(--surface-2) 80%, transparent); border-radius: 0.85rem; padding: 0.7rem 0.75rem; }
+    .snap-cell span { display: block; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
+    .snap-cell strong { display: block; margin-top: 0.25rem; font-size: 1.1rem; font-weight: 500; }
 
-    /* Cards */
+    .grid-2 { display: grid; gap: 1rem; }
     .grid-3 { display: grid; gap: 1rem; }
-    @media (min-width: 640px) { .grid-3 { grid-template-columns: repeat(2, 1fr); } }
-    @media (min-width: 1024px) { .grid-3 { grid-template-columns: repeat(3, 1fr); } }
-    .project-card {
-      display: flex; flex-direction: column; border: 1px solid var(--border);
-      background: var(--bg-elevated); border-radius: var(--radius-xl); padding: 1.25rem;
-      transition: border-color .2s, background .2s;
-    }
-    .project-card:hover { border-color: color-mix(in oklab, var(--primary) 40%, transparent); background: var(--bg-subtle); }
-    .project-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
-    .tag {
-      border: 1px solid var(--border); background: var(--bg); border-radius: 999px;
-      padding: .125rem .625rem; font-family: var(--font-mono); font-size: .6875rem;
-      letter-spacing: .04em; color: var(--muted);
-    }
-    .arrow { color: var(--subtle); transition: color .15s; }
-    .project-card:hover .arrow { color: var(--primary); }
-    .project-card h3 {
-      font-family: var(--font-display); font-size: 1.125rem; font-weight: 600;
-      transition: color .15s;
-    }
-    .project-card:hover h3 { color: var(--primary); }
-    .project-card p { margin-top: .5rem; font-size: .875rem; color: var(--muted); line-height: 1.6; flex: 1; }
-    .project-card .lang { margin-top: 1.25rem; font-family: var(--font-mono); font-size: .75rem; color: var(--subtle); }
-
-    .focus-card, .principle-card {
-      border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 1.5rem;
-      background: var(--bg);
-    }
-    .principle-card { background: var(--surface); }
-    .icon-box {
-      width: 2.75rem; height: 2.75rem; display: flex; align-items: center; justify-content: center;
-      border: 1px solid var(--border); border-radius: var(--radius-md);
-      background: var(--primary-soft); color: var(--primary); margin-bottom: 1.25rem;
-    }
-    .icon-box svg { width: 1.25rem; height: 1.25rem; }
-    .focus-card h3, .principle-card h3 {
-      font-family: var(--font-display); font-size: 1.25rem; font-weight: 600;
-    }
-    .focus-card p, .principle-card p {
-      margin-top: .75rem; font-size: .875rem; color: var(--muted); line-height: 1.65;
-    }
-    .principle-num { font-family: var(--font-mono); font-size: .875rem; color: var(--primary); }
-    .principle-card h3 { margin-top: 1rem; }
-
-    /* About */
-    .about-grid {
-      display: grid; gap: 2.5rem;
-    }
-    @media (min-width: 1024px) {
-      .about-grid { grid-template-columns: 1.1fr .9fr; align-items: center; }
-    }
-    .about-grid p { margin-top: 1rem; color: var(--muted); line-height: 1.7; }
-    .quote {
-      border: 1px solid color-mix(in oklab, var(--primary) 25%, transparent);
-      background: color-mix(in oklab, var(--primary-soft) 40%, transparent);
-      border-radius: var(--radius-xl); padding: 2rem;
-    }
-    .quote svg { width: 1.5rem; height: 1.5rem; color: var(--primary); margin-bottom: 1.25rem; }
-    .quote p {
-      font-family: var(--font-display); font-size: clamp(1.25rem, 2vw, 1.5rem);
-      font-weight: 500; line-height: 1.35; color: var(--fg); margin: 0;
-    }
-    .quote footer {
-      margin-top: 1.5rem; font-family: var(--font-mono); font-size: .75rem;
-      letter-spacing: .08em; text-transform: uppercase; color: var(--muted);
-    }
-
-    /* CTA */
-    .cta-panel {
-      position: relative; overflow: hidden; border: 1px solid var(--border);
-      background: var(--bg-elevated); border-radius: var(--radius-xl);
-      padding: 3rem 1.5rem; text-align: center;
-    }
-    @media (min-width: 640px) { .cta-panel { padding: 4rem 3rem; } }
-    .cta-glow {
-      pointer-events: none; position: absolute; inset: 0; opacity: .5;
-      background: radial-gradient(ellipse 60% 80% at 50% 100%, color-mix(in oklab, var(--primary) 18%, transparent), transparent);
-    }
-    .cta-panel .inner { position: relative; }
-    .cta-panel p { max-width: 28rem; margin: 1rem auto 0; color: var(--muted); }
-    .cta-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: .75rem; margin-top: 2rem; }
-
-    /* Footer */
-    footer.site-footer {
-      border-top: 1px solid var(--border); background: var(--bg-elevated);
-      padding: 2.5rem 0;
-    }
-    .footer-inner {
-      display: flex; flex-direction: column; gap: 1.5rem;
-    }
+    .grid-4 { display: grid; gap: 1rem; }
     @media (min-width: 640px) {
-      .footer-inner { flex-direction: row; align-items: center; justify-content: space-between; }
+      .grid-2 { grid-template-columns: 1fr 1fr; }
+      .sm-2 { grid-template-columns: 1fr 1fr; }
     }
-    .footer-brand { display: flex; align-items: center; gap: .75rem; }
-    .footer-brand img { width: 2rem; height: 2rem; }
-    .footer-brand strong {
-      display: block; font-family: var(--font-display); font-size: .875rem; font-weight: 600;
+    @media (min-width: 900px) {
+      .grid-3 { grid-template-columns: repeat(3, 1fr); }
+      .grid-4 { grid-template-columns: repeat(4, 1fr); }
+      .lg-2 { grid-template-columns: 1fr 1fr; }
     }
-    .footer-brand span { font-size: .75rem; color: var(--muted); }
-    .footer-links { display: flex; flex-wrap: wrap; gap: 1rem; font-size: .875rem; color: var(--muted); }
-    .footer-links a:hover { color: var(--primary); }
 
-    .sr-only {
-      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
-      overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    .icon-box {
+      width: 2.5rem; height: 2.5rem; border-radius: 0.75rem;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: color-mix(in oklab, var(--primary) 10%, transparent); color: var(--primary);
+    }
+    .icon-box svg { width: 1.15rem; height: 1.15rem; }
+
+    .pillars-item { border: 1px solid var(--border); background: var(--bg); border-radius: 1.15rem; padding: 1.25rem 1.2rem; }
+    .segment-card { display: flex; flex-direction: column; padding: 1.25rem; height: 100%; }
+    .segment-card h3 { margin-top: 1rem; font-size: 1.1rem; }
+    .segment-card p { margin-top: 0.5rem; font-size: 0.9rem; color: var(--muted); flex: 1; }
+
+    .cta-band {
+      background: var(--primary); color: var(--primary-fg);
+      border-radius: 1.5rem; padding: 2.25rem 1.5rem; border: 1px solid var(--border);
+    }
+    @media (min-width: 640px) { .cta-band { padding: 2.75rem 2.5rem; } }
+    .cta-band h2 { font-size: clamp(1.4rem, 2.5vw, 1.85rem); max-width: 28rem; }
+    .cta-band p { margin-top: 0.75rem; max-width: 34rem; opacity: 0.92; font-size: 0.95rem; }
+    .cta-band .btn-primary { background: var(--primary-fg); color: var(--primary); }
+    .cta-band .btn-outline { border-color: color-mix(in oklab, var(--primary-fg) 30%, transparent); color: var(--primary-fg); }
+    .cta-band .btn-outline:hover { background: color-mix(in oklab, var(--primary-fg) 10%, transparent); }
+
+    /* Views */
+    .view { display: none; }
+    .view.active { display: block; }
+
+    /* Grow */
+    .system-grid { display: grid; gap: 1rem; }
+    @media (min-width: 640px) { .system-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 1000px) {
+      .grow-layout { display: grid; grid-template-columns: 1fr 20rem; gap: 1.5rem; align-items: start; }
+      .grow-layout .alerts { position: sticky; top: calc(var(--header-h) + 1rem); }
+    }
+    .system-card { overflow: hidden; cursor: pointer; transition: transform .2s, box-shadow .2s, border-color .2s; }
+    .system-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); border-color: color-mix(in oklab, var(--primary) 25%, transparent); }
+    .system-card-hero {
+      height: 7rem; position: relative; display: flex; align-items: flex-end; padding: 0.9rem 1rem;
+      color: var(--primary-fg);
+    }
+    .system-card-body { padding: 1rem; }
+    .metric-mini { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.45rem; margin-top: 0.75rem; }
+    .metric-mini div { background: var(--surface-2); border-radius: 0.55rem; padding: 0.45rem; text-align: center; }
+    .metric-mini span { display: block; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
+    .metric-mini strong { font-size: 0.85rem; font-weight: 500; }
+
+    .sensor-grid { display: grid; gap: 0.75rem; grid-template-columns: 1fr; }
+    @media (min-width: 520px) { .sensor-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 900px) { .sensor-grid { grid-template-columns: 1fr 1fr 1fr; } }
+    .sensor-card { padding: 1rem; }
+    .sensor-card .top { display: flex; justify-content: space-between; gap: 0.5rem; align-items: flex-start; }
+    .sensor-card .label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); font-weight: 500; }
+    .sensor-card .value { margin-top: 0.35rem; font-size: 1.5rem; font-weight: 500; line-height: 1; }
+    .sensor-card .value small { font-size: 0.72rem; font-family: var(--font-sans); color: var(--muted); margin-left: 0.25rem; font-weight: 400; }
+    .bar { margin-top: 0.75rem; height: 0.35rem; background: var(--surface-3); border-radius: 999px; overflow: hidden; }
+    .bar > i { display: block; height: 100%; border-radius: 999px; transition: width .3s; }
+    .bar.ok > i { background: var(--success); }
+    .bar.warn > i { background: var(--warn); }
+    .bar.critical > i { background: var(--danger); }
+
+    .nutrient-grid { display: grid; gap: 0.7rem; }
+    @media (min-width: 640px) { .nutrient-grid { grid-template-columns: 1fr 1fr; } }
+    .nut-item { border: 1px solid var(--border); background: color-mix(in oklab, var(--surface-2) 50%, transparent); border-radius: 0.85rem; padding: 0.85rem; }
+    .progress { height: 0.4rem; background: var(--surface-3); border-radius: 999px; overflow: hidden; margin-top: 0.55rem; }
+    .progress > i { display: block; height: 100%; border-radius: 999px; background: var(--primary); }
+
+    .switch {
+      width: 2.75rem; height: 1.5rem; border-radius: 999px; background: var(--surface-3);
+      position: relative; flex-shrink: 0; transition: background .15s;
+    }
+    .switch.on { background: var(--primary); }
+    .switch::after {
+      content: ""; position: absolute; top: 0.125rem; left: 0.125rem;
+      width: 1.25rem; height: 1.25rem; border-radius: 999px; background: var(--surface);
+      box-shadow: 0 1px 2px color-mix(in oklab,#000 15%,transparent);
+      transition: transform .15s;
+    }
+    .switch.on::after { transform: translateX(1.25rem); }
+
+    .alert-item {
+      display: flex; gap: 0.65rem; align-items: flex-start;
+      border: 1px solid var(--border); border-radius: 0.85rem; padding: 0.75rem 0.85rem; margin-bottom: 0.5rem;
+    }
+    .alert-item.warn { border-color: color-mix(in oklab, var(--warn) 25%, transparent); background: color-mix(in oklab, var(--warn) 8%, transparent); }
+    .alert-item.critical { border-color: color-mix(in oklab, var(--danger) 25%, transparent); background: color-mix(in oklab, var(--danger) 6%, transparent); }
+    .alert-item.ok { border-color: color-mix(in oklab, var(--success) 20%, transparent); background: color-mix(in oklab, var(--success) 8%, transparent); color: var(--success); }
+
+    .market-grid { display: grid; gap: 1rem; }
+    @media (min-width: 640px) { .market-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 960px) { .market-grid { grid-template-columns: 1fr 1fr 1fr; } }
+    .product { display: flex; flex-direction: column; padding: 1.25rem; height: 100%; }
+    .product h3 { margin-top: 0.75rem; font-size: 1.1rem; line-height: 1.25; }
+    .product .desc { margin-top: 0.35rem; font-size: 0.9rem; color: var(--muted); flex: 1; }
+    .product .meta { margin-top: 0.7rem; font-size: 0.75rem; color: var(--subtle); display: flex; align-items: center; gap: 0.35rem; }
+    .product .foot { margin-top: 1.15rem; display: flex; align-items: flex-end; justify-content: space-between; gap: 0.75rem; }
+
+    .recipe-grid { display: grid; gap: 1rem; }
+    @media (min-width: 800px) { .recipe-grid { grid-template-columns: 1fr 1fr; } }
+    .recipe { padding: 1.25rem; }
+    .recipe h3 { margin-top: 0.65rem; font-size: 1.2rem; }
+    .recipe-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.45rem; margin-top: 1rem; }
+    @media (min-width: 480px) { .recipe-stats { grid-template-columns: repeat(4, 1fr); } }
+    .recipe-stats div { background: var(--surface-2); border-radius: 0.55rem; padding: 0.5rem 0.55rem; }
+    .recipe-stats span { display: block; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
+    .recipe-stats strong { font-size: 0.85rem; font-weight: 500; }
+    .tips { margin-top: 0.9rem; list-style: none; }
+    .tips li { display: flex; gap: 0.45rem; font-size: 0.9rem; color: var(--muted); margin-top: 0.35rem; }
+    .tips li::before { content: "·"; color: var(--leaf); font-weight: 700; }
+
+    table.pos { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    table.pos th, table.pos td { text-align: left; padding: 0.85rem 1rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+    table.pos th { width: 38%; font-weight: 500; }
+    table.pos td { color: var(--muted); }
+
+    footer.site-footer {
+      border-top: 1px solid var(--border); background: var(--surface);
+      padding: 2.5rem 0; margin-top: 1rem;
+    }
+    .footer-grid { display: grid; gap: 2rem; }
+    @media (min-width: 720px) { .footer-grid { grid-template-columns: 1.3fr 1fr; } }
+    .footer-links { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; font-size: 0.9rem; }
+    .footer-links a { display: block; margin-top: 0.4rem; }
+    .footer-links a:hover { color: var(--primary); }
+    .footer-links .label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); font-weight: 500; }
+
+    .toast {
+      position: fixed; top: 5rem; left: 50%; transform: translateX(-50%) translateY(-1rem);
+      background: var(--fg); color: var(--bg); padding: 0.65rem 1rem; border-radius: 0.75rem;
+      font-size: 0.85rem; font-weight: 500; opacity: 0; pointer-events: none;
+      transition: opacity .2s, transform .2s; z-index: 100; max-width: min(90vw, 22rem); text-align: center;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    .back-link { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.875rem; font-weight: 500; color: var(--muted); margin-bottom: 1rem; }
+    .back-link:hover { color: var(--fg); }
+
+    .detail-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .live-dot {
+      display: inline-block; width: 0.45rem; height: 0.45rem; border-radius: 999px;
+      background: var(--leaf); margin-right: 0.35rem; box-shadow: 0 0 0 3px color-mix(in oklab, var(--leaf) 25%, transparent);
     }
   </style>
 </head>
 <body>
-  <header class="header" id="site-header">
-    <div class="header-inner">
-      <a class="brand" href="#top">
-        <img src="autobotanist.png" alt="" width="36" height="36" />
-        <span>Autobotanist</span>
+  <header class="header">
+    <div class="wrap header-inner">
+      <a href="#home" class="brand" data-nav="home">
+        <img src="autobotanist.png" alt="Autobotanist monogram" width="36" height="36" />
+        <span class="brand-text">
+          <strong>Autobotanist</strong>
+          <span>Food sovereignty platform</span>
+        </span>
       </a>
       <nav class="nav-desktop" aria-label="Primary">
-        <a href="#work">Work</a>
-        <a href="#focus">Focus</a>
-        <a href="#principles">Principles</a>
-        <a href="#about">About</a>
-        <a class="btn btn-primary btn-sm" style="margin-left:.5rem" href="https://github.com/ObliviousOdin" target="_blank" rel="noreferrer">GitHub</a>
+        <a href="#home" data-nav="home">Home</a>
+        <a href="#grow" data-nav="grow">Grow Hub</a>
+        <a href="#data" data-nav="data">Open Data</a>
+        <a href="#market" data-nav="market">5miles Market</a>
+        <a href="#about" data-nav="about">About</a>
       </nav>
-      <button class="menu-btn" id="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu">
-        <svg id="icon-menu" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
-        <svg id="icon-close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
       </button>
     </div>
-    <nav class="mobile-nav wrap" id="mobile-nav" aria-label="Mobile">
-      <a href="#work">Work</a>
-      <a href="#focus">Focus</a>
-      <a href="#principles">Principles</a>
-      <a href="#about">About</a>
-      <a class="btn btn-primary" style="width:100%;margin-top:.5rem" href="https://github.com/ObliviousOdin" target="_blank" rel="noreferrer">Open GitHub</a>
-    </nav>
+    <div class="mobile-nav" id="mobileNav">
+      <div class="wrap">
+        <a href="#home" data-nav="home">Home</a>
+        <a href="#grow" data-nav="grow">Grow Hub</a>
+        <a href="#data" data-nav="data">Open Data</a>
+        <a href="#market" data-nav="market">5miles Market</a>
+        <a href="#about" data-nav="about">About</a>
+      </div>
+    </div>
   </header>
 
-  <main id="top">
+  <!-- HOME -->
+  <div id="view-home" class="view active">
     <section class="hero">
-      <div class="grid-lines" aria-hidden="true"></div>
       <div class="wrap hero-grid">
         <div>
-          <div class="pill">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
-            Personal systems lab
+          <div style="display:flex;flex-wrap:wrap;gap:0.4rem">
+            <span class="badge badge-soft">Public Benefit Corporation</span>
+            <span class="badge badge-outline">Connected Agriculture & IoT</span>
           </div>
-          <h1 class="text-balance">
-            Cultivating systems
-            <span class="line-primary">that grow.</span>
-          </h1>
-          <p class="hero-copy">
-            Autobotanist is the public face of ObliviousOdin—building agent harnesses, creative tools, and grounded software from first principles.
+          <h1>Fresh, local food as the universal standard.</h1>
+          <p class="hero-lead">
+            A choice defined by taste and health — not origin or environmental cost.
+            Autobotanist builds a waste-free, connected ecosystem so every household can
+            grow and consume food exactly where they live.
           </p>
           <div class="hero-actions">
-            <a class="btn btn-primary btn-lg" href="#work">Explore work <span aria-hidden="true">↗</span></a>
-            <a class="btn btn-secondary btn-lg" href="https://github.com/ObliviousOdin" target="_blank" rel="noreferrer">View on GitHub</a>
+            <a class="btn btn-primary btn-lg" href="#market" data-nav="market">Shop local harvest</a>
+            <a class="btn btn-secondary btn-lg" href="#grow" data-nav="grow">Start growing</a>
+          </div>
+          <dl class="stats">
+            <div class="stat"><dt>Systems</dt><dd class="tabular" id="statSystems">5</dd></div>
+            <div class="stat"><dt>Avg pH</dt><dd class="tabular" id="statPh">6.02</dd></div>
+            <div class="stat"><dt>Alerts</dt><dd class="tabular" id="statAlerts">0</dd></div>
+          </dl>
+        </div>
+        <div class="card" style="overflow:hidden;box-shadow:var(--shadow)">
+          <div class="snap-head">
+            <p><span class="live-dot"></span>Live hydro snapshot</p>
+            <h3 id="snapName">Basil NFT Line</h3>
+          </div>
+          <div class="snap-body" id="snapBody"></div>
+          <div style="padding:0 1.2rem 1.2rem">
+            <a class="btn btn-soft" style="width:100%" href="#grow" data-nav="grow" id="snapLink">View full telemetry →</a>
           </div>
         </div>
-        <div class="hero-card-wrap">
-          <div class="hero-glow" aria-hidden="true"></div>
-          <div class="hero-card">
-            <img class="logo" src="autobotanist.png" alt="Autobotanist monogram" width="160" height="160" />
-            <img class="wordmark" src="autobotanist_name.png" alt="Autobotanist" width="280" height="35" />
-            <p class="meta">ObliviousOdin · MrGoat</p>
-          </div>
-        </div>
       </div>
     </section>
 
-    <section class="band" id="work">
-      <div class="wrap">
-        <div class="section-head">
-          <div>
-            <p class="eyebrow">Selected work</p>
-            <h2>Public repositories</h2>
-            <p class="section-desc">Recent open projects across Fabric tooling, agent harnesses, creative skills, and research code.</p>
-          </div>
-          <a class="btn btn-outline" href="https://github.com/ObliviousOdin?tab=repositories" target="_blank" rel="noreferrer">All repos ↗</a>
-        </div>
-        <div class="grid-3">
-          <a class="project-card" href="https://github.com/ObliviousOdin/fabric-profile-market" target="_blank" rel="noreferrer">
-            <div class="project-top"><span class="tag">Fabric</span><span class="arrow" aria-hidden="true">↗</span></div>
-            <h3>fabric-profile-market</h3>
-            <p>Standalone Fabric profile distributions and collection manager.</p>
-            <span class="lang">Python</span>
-          </a>
-          <a class="project-card" href="https://github.com/ObliviousOdin/fabric-studio" target="_blank" rel="noreferrer">
-            <div class="project-top"><span class="tag">Video</span><span class="arrow" aria-hidden="true">↗</span></div>
-            <h3>fabric-studio</h3>
-            <p>Standalone Fabric video composition workspace plugin.</p>
-            <span class="lang">Python</span>
-          </a>
-          <a class="project-card" href="https://github.com/ObliviousOdin/obliviousodin-gtm-harness" target="_blank" rel="noreferrer">
-            <div class="project-top"><span class="tag">GTM</span><span class="arrow" aria-hidden="true">↗</span></div>
-            <h3>obliviousodin-gtm-harness</h3>
-            <p>Ever-learning GTM agent harness—skills, playbooks, and continuous strategy updates.</p>
-            <span class="lang">Agent</span>
-          </a>
-          <a class="project-card" href="https://github.com/ObliviousOdin/foundational-comic-skills" target="_blank" rel="noreferrer">
-            <div class="project-top"><span class="tag">Creative</span><span class="arrow" aria-hidden="true">↗</span></div>
-            <h3>foundational-comic-skills</h3>
-            <p>Retro hand-inked manga experiments and prompt engineering for comic craft.</p>
-            <span class="lang">Python</span>
-          </a>
-          <a class="project-card" href="https://github.com/ObliviousOdin/primemanifold-agentic" target="_blank" rel="noreferrer">
-            <div class="project-top"><span class="tag">Robotics</span><span class="arrow" aria-hidden="true">↗</span></div>
-            <h3>primemanifold-agentic</h3>
-            <p>Hierarchical multi-agent robotics framework with security-first design.</p>
-            <span class="lang">Agent</span>
-          </a>
-          <a class="project-card" href="https://github.com/ObliviousOdin/verifiers" target="_blank" rel="noreferrer">
-            <div class="project-top"><span class="tag">RL</span><span class="arrow" aria-hidden="true">↗</span></div>
-            <h3>verifiers</h3>
-            <p>Verifiers for LLM reinforcement learning.</p>
-            <span class="lang">ML</span>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <section class="band band-soft" id="focus">
-      <div class="wrap">
-        <p class="eyebrow">Focus</p>
-        <h2>Where the work compounds</h2>
-        <div class="grid-3" style="margin-top:3rem">
-          <article class="focus-card">
-            <div class="icon-box" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2M20 14h2M15 13v2M9 13v2"/></svg>
-            </div>
-            <h3>Agent harnesses</h3>
-            <p>Long-horizon multi-agent frameworks, GTM skill systems, and self-improving loops designed for real work—not demos.</p>
-          </article>
-          <article class="focus-card">
-            <div class="icon-box" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>
-            </div>
-            <h3>Creative tooling</h3>
-            <p>Fabric video composition, profile markets, and comic craft pipelines that treat generation as a discipline.</p>
-          </article>
-          <article class="focus-card">
-            <div class="icon-box" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2M15 20v2M2 15h2M2 9h2M20 15h2M20 9h2M9 2v2M9 20v2"/></svg>
-            </div>
-            <h3>Grounded systems</h3>
-            <p>From Arduino sensors to robotics-adjacent agent stacks—software that stays connected to the physical world.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="band" id="principles">
-      <div class="wrap">
-        <p class="eyebrow">Principles</p>
-        <h2>How Autobotanist thinks</h2>
-        <div class="grid-3" style="margin-top:3rem">
-          <article class="principle-card">
-            <span class="principle-num">01</span>
-            <h3>Grow from roots</h3>
-            <p>Hardware, sensors, and constraint-aware design came first. Abstraction without roots collapses.</p>
-          </article>
-          <article class="principle-card">
-            <span class="principle-num">02</span>
-            <h3>Train the mind</h3>
-            <p>Muscle funds the mind. Capital, focus, and craft should compound into clearer systems.</p>
-          </article>
-          <article class="principle-card">
-            <span class="principle-num">03</span>
-            <h3>Ship living systems</h3>
-            <p>Agents, harnesses, and tools that learn in production beat static prototypes every time.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="band" id="about">
-      <div class="wrap about-grid">
+    <section class="section-surface section-tight">
+      <div class="wrap" style="display:grid;gap:1.5rem">
         <div>
-          <p class="eyebrow">About</p>
-          <h2>Roots in hardware.<br /><span class="muted">Canopy in agents.</span></h2>
-          <p>Autobotanist started as a quiet GitHub Pages sketch and a monogram. The name stuck: cultivate carefully, automate what should compound, leave room for craft.</p>
-          <p>Today the same handle spans video tooling, GTM agent systems, comic research, RL verifiers, and older Arduino experiments—one continuous garden of systems work.</p>
+          <p class="subtle" style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.05em;font-weight:500;color:var(--sensor)">Mission</p>
+          <h2 style="margin-top:0.4rem;font-size:clamp(1.4rem,2.5vw,1.85rem)">Food sovereignty for local communities</h2>
         </div>
-        <blockquote class="quote">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M11 9h4a2 2 0 0 0 2-2V5"/><circle cx="9" cy="9" r="2"/><path d="M7 21v-4a2 2 0 0 1 2-2h4"/><circle cx="15" cy="15" r="2"/></svg>
-          <p class="text-balance">“Every dollar tied to muscle must eventually find its way to mind, or both will atrophy.”</p>
-          <footer>— MrGoat / ObliviousOdin</footer>
-        </blockquote>
+        <p class="muted" style="max-width:42rem;font-size:1.05rem">
+          Autobotanist empowers local communities by providing an integrated platform that simplifies
+          sustainable growing. We deliver infrastructure, IoT tools, and data-driven insights that connect
+          urban farmers, hobbyists, and wholesalers — reducing barriers to a high-yield, organic lifestyle.
+        </p>
       </div>
     </section>
 
-    <section class="band">
-      <div class="wrap">
-        <div class="cta-panel">
-          <div class="cta-glow" aria-hidden="true"></div>
-          <div class="inner">
-            <h2>Build with Autobotanist</h2>
-            <p>Explore the public repos, fork what is useful, and follow the work as it grows.</p>
-            <div class="cta-actions">
-              <a class="btn btn-primary btn-lg" href="https://github.com/ObliviousOdin" target="_blank" rel="noreferrer">github.com/ObliviousOdin ↗</a>
-              <a class="btn btn-secondary btn-lg" href="#work">Browse projects</a>
+    <section class="section">
+      <div class="wrap grid-2 lg-2" style="gap:2.5rem">
+        <div>
+          <span class="badge badge-warn">The problem</span>
+          <h2 style="margin-top:0.75rem;font-size:clamp(1.4rem,2.5vw,1.85rem)">Local agriculture lacks the connectivity to scale</h2>
+          <ul style="margin-top:1.25rem;list-style:none;display:grid;gap:0.75rem">
+            <li class="muted" style="display:flex;gap:0.7rem;font-size:0.95rem"><span style="width:0.35rem;height:0.35rem;border-radius:999px;background:var(--warn);margin-top:0.55rem;flex-shrink:0"></span>Consumers face high costs and environmental impact from non-local produce.</li>
+            <li class="muted" style="display:flex;gap:0.7rem;font-size:0.95rem"><span style="width:0.35rem;height:0.35rem;border-radius:999px;background:var(--warn);margin-top:0.55rem;flex-shrink:0"></span>Local growers struggle with labor, technical complexity, and no dedicated marketplace.</li>
+            <li class="muted" style="display:flex;gap:0.7rem;font-size:0.95rem"><span style="width:0.35rem;height:0.35rem;border-radius:999px;background:var(--warn);margin-top:0.55rem;flex-shrink:0"></span>Community agriculture stays fragmented — hard to grow, hard to sell, hard to share what works.</li>
+          </ul>
+        </div>
+        <div>
+          <span class="badge badge-success">The solution</span>
+          <h2 style="margin-top:0.75rem;font-size:clamp(1.4rem,2.5vw,1.85rem)">A multi-sided connected platform</h2>
+          <p class="muted" style="margin-top:0.6rem;font-size:0.95rem">Hardware, software, and open data — designed for people with non-backend coding knowledge.</p>
+          <div style="margin-top:1.25rem;display:grid;gap:0.7rem">
+            <div class="card" style="display:flex;gap:0.85rem;padding:1rem">
+              <span class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/></svg></span>
+              <div><h3 style="font-size:1rem">Hardware</h3><p class="muted" style="font-size:0.9rem;margin-top:0.25rem">Modular IoT grow kits and sensors that automate water, light, and nutrient needs.</p></div>
+            </div>
+            <div class="card" style="display:flex;gap:0.85rem;padding:1rem">
+              <span class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M6 6 5 3H2"/></svg></span>
+              <div><h3 style="font-size:1rem">Software</h3><p class="muted" style="font-size:0.9rem;margin-top:0.25rem">Professional-grade tools and e-commerce so market vendors can sell effortlessly.</p></div>
+            </div>
+            <div class="card" style="display:flex;gap:0.85rem;padding:1rem">
+              <span class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg></span>
+              <div><h3 style="font-size:1rem">Data</h3><p class="muted" style="font-size:0.9rem;margin-top:0.25rem">Open growing data among users to optimize yields and eliminate trial-and-error.</p></div>
             </div>
           </div>
         </div>
       </div>
     </section>
-  </main>
+
+    <section class="section-surface section">
+      <div class="wrap">
+        <span class="badge badge-sensor">Primary value prop</span>
+        <h2 style="margin-top:0.75rem;font-size:clamp(1.6rem,3vw,2rem)">“5miles for Farmers”</h2>
+        <p class="muted" style="margin-top:0.6rem;max-width:40rem">
+          An exclusive, simple-to-use platform for local vendors to reach their immediate community —
+          not a global mega-marketplace. Professional-grade data analysis through an intuitive interface
+          for growers who aren’t engineers.
+        </p>
+        <div class="grid-3" style="margin-top:1.75rem">
+          <div class="pillars-item"><p class="subtle" style="font-size:0.68rem;text-transform:uppercase;letter-spacing:0.04em;font-weight:500">Market category</p><p style="margin-top:0.4rem;font-weight:500;font-size:0.95rem">Connected Agriculture & IoT Sustainability</p></div>
+          <div class="pillars-item"><p class="subtle" style="font-size:0.68rem;text-transform:uppercase;letter-spacing:0.04em;font-weight:500">Core differentiator</p><p style="margin-top:0.4rem;font-weight:500;font-size:0.95rem">Pro data, non-backend UI</p></div>
+          <div class="pillars-item"><p class="subtle" style="font-size:0.68rem;text-transform:uppercase;letter-spacing:0.04em;font-weight:500">Radius promise</p><p style="margin-top:0.4rem;font-weight:500;font-size:0.95rem">Immediate community first</p></div>
+        </div>
+        <div style="margin-top:1.5rem">
+          <a class="btn btn-outline" href="#market" data-nav="market">Browse within 5 miles →</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <p class="subtle" style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.05em;font-weight:500;color:var(--sensor)">Who we serve</p>
+        <h2 style="margin-top:0.4rem;font-size:clamp(1.6rem,3vw,2rem)">Value by segment</h2>
+        <div class="grid-2" style="margin-top:1.75rem">
+          <div class="card segment-card">
+            <span class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22V12"/><path d="M12 12c-3-6-6-7-8-7 2 4 2 7 2 10h6"/><path d="M12 12c3-6 6-7 8-7-2 4-2 7-2 10h-6"/></svg></span>
+            <h3>For hobbyists</h3>
+            <p>Turn a personal interest into income and fresh food through automation and community integration.</p>
+            <a class="btn btn-ghost" href="#grow" data-nav="grow" style="margin-top:1rem">Open Grow Hub →</a>
+          </div>
+          <div class="card segment-card">
+            <span class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg></span>
+            <h3>For local farmers</h3>
+            <p>Gain an online presence and affordable DIY automation without large-scale logistics overhead.</p>
+            <a class="btn btn-ghost" href="#market" data-nav="market" style="margin-top:1rem">See 5miles Market →</a>
+          </div>
+          <div class="card segment-card">
+            <span class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 21v-4h6v4"/></svg></span>
+            <h3>For wholesalers</h3>
+            <p>Access mass-produced grow kits and streamlined software to modernize local distribution.</p>
+            <a class="btn btn-ghost" href="#market" data-nav="market" style="margin-top:1rem">Browse kits →</a>
+          </div>
+          <div class="card segment-card">
+            <span class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+            <h3>For non-profits</h3>
+            <p>Educational hydroponic sensors and seminars that teach conservation and coding to the next generation.</p>
+            <a class="btn btn-ghost" href="#data" data-nav="data" style="margin-top:1rem">Explore open data →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-surface section">
+      <div class="wrap">
+        <p class="subtle" style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.05em;font-weight:500;color:var(--sensor)">Strategic pillars</p>
+        <h2 style="margin-top:0.4rem;font-size:clamp(1.6rem,3vw,2rem)">How we grow the platform</h2>
+        <div class="grid-3" style="margin-top:1.75rem">
+          <div class="pillars-item">
+            <h3 style="font-size:1.1rem">Platform neutrality</h3>
+            <p class="muted" style="margin-top:0.5rem;font-size:0.9rem">A raised surface for other businesses to develop sustainable products — not a closed garden.</p>
+          </div>
+          <div class="pillars-item">
+            <h3 style="font-size:1.1rem">Triple bottom line</h3>
+            <p class="muted" style="margin-top:0.5rem;font-size:0.9rem">Prioritize people and planet by reducing carbon footprints and eliminating food deserts.</p>
+          </div>
+          <div class="pillars-item">
+            <h3 style="font-size:1.1rem">Radical accessibility</h3>
+            <p class="muted" style="margin-top:0.5rem;font-size:0.9rem">Products available to every home through intuitive, affordable design — grow literacy without a CS degree.</p>
+          </div>
+        </div>
+        <div class="grid-3" style="margin-top:1rem">
+          <div class="pillars-item" style="background:color-mix(in oklab,var(--primary) 5%, transparent);border-color:color-mix(in oklab,var(--primary) 15%, transparent)">
+            <p style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.04em;color:var(--primary);font-weight:500">People</p>
+            <p style="margin-top:0.35rem;font-family:var(--font-display);font-size:1.2rem;font-weight:600">Food sovereignty</p>
+            <p class="muted" style="font-size:0.85rem;margin-top:0.25rem">Local income, skills, and access</p>
+          </div>
+          <div class="pillars-item" style="background:color-mix(in oklab,var(--primary) 5%, transparent);border-color:color-mix(in oklab,var(--primary) 15%, transparent)">
+            <p style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.04em;color:var(--primary);font-weight:500">Planet</p>
+            <p style="margin-top:0.35rem;font-family:var(--font-display);font-size:1.2rem;font-weight:600">Fewer food miles</p>
+            <p class="muted" style="font-size:0.85rem;margin-top:0.25rem">Waste-free, connected growing</p>
+          </div>
+          <div class="pillars-item" style="background:color-mix(in oklab,var(--primary) 5%, transparent);border-color:color-mix(in oklab,var(--primary) 15%, transparent)">
+            <p style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.04em;color:var(--primary);font-weight:500">Yield</p>
+            <p style="margin-top:0.35rem;font-family:var(--font-display);font-size:1.2rem;font-weight:600">High-yield organic</p>
+            <p class="muted" style="font-size:0.85rem;margin-top:0.25rem">Data-backed hydro systems</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="cta-band">
+          <h2>Professional-grade grow data. Available to every home.</h2>
+          <p>Track pH, EC, TDS, nutrient ppm, photoperiod, and PPFD in plain language. Automations keep reservoirs stable while your neighborhood harvests.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:0.7rem;margin-top:1.35rem">
+            <a class="btn btn-primary btn-lg" href="#grow" data-nav="grow">Explore live systems</a>
+            <a class="btn btn-outline btn-lg" href="#about" data-nav="about">Vision & positioning</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- GROW -->
+  <div id="view-grow" class="view">
+    <section class="section">
+      <div class="wrap">
+        <div id="growList">
+          <p class="subtle" style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.05em;font-weight:500;color:var(--sensor)">Grow Hub · Infrastructure & IoT</p>
+          <h1 style="margin-top:0.35rem;font-size:clamp(1.75rem,3vw,2.1rem)">Simplify sustainable growing</h1>
+          <p class="muted" style="margin-top:0.5rem;max-width:36rem;font-size:0.95rem">
+            Modular sensors automate water, light, and nutrients. Professional data analysis in plain language —
+            built for hobbyists and local farmers, not backend engineers.
+          </p>
+          <div class="card" style="margin-top:1.25rem;padding:0.85rem 1rem;display:flex;align-items:center;gap:0.55rem;font-size:0.9rem;color:var(--muted)">
+            <span class="live-dot"></span> Live telemetry every few seconds. Toggle automations on a system for pH, dosing, and top-off.
+          </div>
+          <div class="grow-layout" style="margin-top:1.75rem">
+            <div class="system-grid" id="systemGrid"></div>
+            <div class="alerts card" style="padding:1.1rem" id="alertsPanel"></div>
+          </div>
+        </div>
+        <div id="growDetail" hidden></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- DATA -->
+  <div id="view-data" class="view">
+    <section class="section">
+      <div class="wrap">
+        <p class="subtle" style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.05em;font-weight:500;color:var(--sensor)">Open grow data</p>
+        <h1 style="margin-top:0.35rem;font-size:clamp(1.75rem,3vw,2.1rem)">Shared recipes that eliminate trial-and-error</h1>
+        <p class="muted" style="margin-top:0.5rem;max-width:36rem;font-size:0.95rem">
+          An open model for growing data — professional analysis through a plain-language interface.
+          Optimize yields without backend knowledge.
+        </p>
+        <div class="recipe-grid" style="margin-top:1.75rem" id="recipeGrid"></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- MARKET -->
+  <div id="view-market" class="view">
+    <section class="section">
+      <div class="wrap">
+        <p class="subtle" style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.05em;font-weight:500;color:var(--sensor)">5miles for Farmers</p>
+        <h1 style="margin-top:0.35rem;font-size:clamp(1.75rem,3vw,2.1rem)">Your neighborhood harvest</h1>
+        <p class="muted" style="margin-top:0.5rem;max-width:36rem;font-size:0.95rem">
+          An exclusive, simple platform for local vendors to reach their immediate community.
+          Produce, DIY grow kits, nutrients, and classroom sensors — without global logistics.
+        </p>
+        <div style="margin-top:1rem;display:flex;flex-wrap:wrap;gap:0.5rem">
+          <span class="badge badge-secondary">Default radius: 5 miles</span>
+          <span class="badge badge-secondary">Built for market vendors & urban farms</span>
+        </div>
+        <div class="market-grid" style="margin-top:1.75rem" id="marketGrid"></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ABOUT -->
+  <div id="view-about" class="view">
+    <section class="section">
+      <div class="wrap" style="max-width:48rem">
+        <span class="badge badge-soft">Public Benefit Corporation</span>
+        <h1 style="margin-top:0.75rem;font-size:clamp(1.75rem,3vw,2.25rem)">Autobotanist strategic identity</h1>
+        <p class="muted" style="margin-top:0.6rem">Vision, mission, and positioning — the language we use with communities, partners, and investors.</p>
+
+        <div class="card" style="padding:1.35rem;margin-top:1.75rem">
+          <p style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--primary);font-weight:500">Vision</p>
+          <p style="margin-top:0.65rem;line-height:1.6">
+            To create a world where fresh, local food is the universal standard — a choice defined by taste and health
+            rather than origin or environmental cost. We imagine a future where every household is part of a waste-free,
+            connected ecosystem that empowers individuals to grow and consume medicine and food exactly where they live.
+          </p>
+        </div>
+        <div class="card" style="padding:1.35rem;margin-top:1rem">
+          <p style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--primary);font-weight:500">Mission</p>
+          <p style="margin-top:0.65rem;line-height:1.6">
+            Autobotanist empowers local communities to achieve food sovereignty by providing an integrated platform that
+            simplifies the complexities of sustainable growing. We deliver the infrastructure, IoT tools, and data-driven
+            insights necessary to connect urban farmers, hobbyists, and wholesalers, reducing the barriers to a high-yield,
+            organic lifestyle.
+          </p>
+        </div>
+
+        <h2 style="margin-top:2rem;font-size:1.25rem">Strategic positioning</h2>
+        <div class="card" style="margin-top:0.75rem;overflow:hidden">
+          <table class="pos">
+            <tr><th>Market category</th><td>Connected Agriculture & IoT Sustainability</td></tr>
+            <tr><th>Primary value prop</th><td>“5miles for Farmers” — exclusive, simple platform for local vendors to reach their immediate community</td></tr>
+            <tr><th>Core differentiator</th><td>Professional-grade data analysis through an intuitive interface for non-backend users</td></tr>
+            <tr><th>Target segments</th><td>Households, urban farmers, hotels / cultural communities, non-profits (educational kits)</td></tr>
+          </table>
+        </div>
+
+        <h2 style="margin-top:2rem;font-size:1.25rem">Growth pillars</h2>
+        <ol style="margin-top:0.75rem;list-style:none;display:grid;gap:0.6rem">
+          <li class="card" style="padding:1rem 1.1rem;display:flex;gap:0.75rem"><span class="tabular" style="color:var(--primary);font-weight:500">1</span><div><strong>Platform neutrality</strong><p class="muted" style="font-size:0.9rem;margin-top:0.2rem">Acting as a raised surface for other businesses to develop sustainable products.</p></div></li>
+          <li class="card" style="padding:1rem 1.1rem;display:flex;gap:0.75rem"><span class="tabular" style="color:var(--primary);font-weight:500">2</span><div><strong>Triple bottom line</strong><p class="muted" style="font-size:0.9rem;margin-top:0.2rem">Prioritizing people and the planet by reducing carbon footprints and eliminating food deserts.</p></div></li>
+          <li class="card" style="padding:1rem 1.1rem;display:flex;gap:0.75rem"><span class="tabular" style="color:var(--primary);font-weight:500">3</span><div><strong>Radical accessibility</strong><p class="muted" style="font-size:0.9rem;margin-top:0.2rem">Ensuring products are available to every home through intuitive, affordable design.</p></div></li>
+        </ol>
+
+        <div style="margin-top:1.5rem" class="card" style="padding:1.25rem;margin-top:1.5rem">
+          <div class="card" style="padding:1.25rem">
+            <p style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted);font-weight:500">Open systems work</p>
+            <p class="muted" style="margin-top:0.5rem;font-size:0.95rem">
+              Autobotanist also ships agent harnesses and creative tooling under
+              <a href="https://github.com/ObliviousOdin" target="_blank" rel="noopener" style="color:var(--primary);font-weight:500">@ObliviousOdin</a>
+              — platform neutrality in practice.
+            </p>
+            <a class="btn btn-outline btn-sm" style="margin-top:0.85rem" href="https://github.com/ObliviousOdin?tab=repositories" target="_blank" rel="noopener">All public repos →</a>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-wrap:wrap;gap:0.65rem;margin-top:1.75rem">
+          <a class="btn btn-primary" href="#grow" data-nav="grow">Try the Grow Hub</a>
+          <a class="btn btn-secondary" href="#market" data-nav="market">Browse 5miles Market</a>
+        </div>
+      </div>
+    </section>
+  </div>
 
   <footer class="site-footer">
-    <div class="wrap footer-inner">
-      <div class="footer-brand">
-        <img src="autobotanist.png" alt="" width="32" height="32" />
-        <div>
-          <strong>Autobotanist</strong>
-          <span>ObliviousOdin · MrGoat</span>
+    <div class="wrap footer-grid">
+      <div>
+        <div class="brand" style="margin-bottom:0.75rem">
+          <img src="autobotanist.png" alt="" width="36" height="36" />
+          <span class="brand-text"><strong>Autobotanist</strong><span>Public Benefit Corporation</span></span>
         </div>
+        <p class="muted" style="max-width:28rem;font-size:0.9rem">
+          Building a connected platform for local growers and food consumers — IoT, open grow data,
+          and hyperlocal commerce for food sovereignty.
+        </p>
+        <p class="subtle" style="margin-top:0.75rem;font-size:0.75rem">People · Planet · Local yield · Radical accessibility</p>
       </div>
       <div class="footer-links">
-        <a href="https://github.com/ObliviousOdin" target="_blank" rel="noreferrer">github.com/ObliviousOdin</a>
-        <span>© 2026</span>
+        <div>
+          <div class="label">Product</div>
+          <a href="#grow" data-nav="grow">Grow Hub</a>
+          <a href="#market" data-nav="market">5miles Market</a>
+          <a href="#data" data-nav="data">Open Data</a>
+        </div>
+        <div>
+          <div class="label">Company</div>
+          <a href="#about" data-nav="about">Vision & mission</a>
+          <a href="https://github.com/ObliviousOdin/autobotanist.github.io" target="_blank" rel="noopener">Source</a>
+          <p class="muted" style="margin-top:0.4rem;font-size:0.85rem">PBC · Connected agriculture</p>
+        </div>
       </div>
     </div>
   </footer>
 
+  <nav class="bottom-nav" aria-label="Mobile">
+    <div class="bottom-nav-inner">
+      <a href="#home" data-nav="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10.5 12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1v-10.5z"/></svg>Home</a>
+      <a href="#grow" data-nav="grow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3h6v4H9z"/><path d="M10 7v4"/><path d="M14 7v4"/><rect x="5" y="11" width="14" height="10" rx="2"/></svg>Grow</a>
+      <a href="#data" data-nav="data"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>Data</a>
+      <a href="#market" data-nav="market"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg>Market</a>
+      <a href="#about" data-nav="about"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>About</a>
+    </div>
+  </nav>
+
+  <div class="toast" id="toast" role="status"></div>
+
   <script>
-    (function () {
-      var header = document.getElementById("site-header");
-      var toggle = document.getElementById("menu-toggle");
-      var iconMenu = document.getElementById("icon-menu");
-      var iconClose = document.getElementById("icon-close");
-      var open = false;
+  (function () {
+    const RANGES = {
+      ph: { min: 5.5, max: 6.5, unit: "", label: "pH" },
+      ec: { min: 1.2, max: 2.4, unit: "mS/cm", label: "EC" },
+      tds: { min: 600, max: 1200, unit: "ppm", label: "TDS" },
+      waterTemp: { min: 18, max: 24, unit: "°C", label: "Water temp" },
+      airTemp: { min: 18, max: 28, unit: "°C", label: "Air temp" },
+      humidity: { min: 40, max: 70, unit: "%", label: "Humidity" },
+      waterLevel: { min: 40, max: 100, unit: "%", label: "Reservoir" },
+      ppfd: { min: 200, max: 600, unit: "µmol", label: "PPFD" },
+      dissolvedOxygen: { min: 5, max: 12, unit: "mg/L", label: "Dissolved O₂" },
+    };
 
-      function setOpen(next) {
-        open = next;
-        header.classList.toggle("is-open", open);
-        toggle.setAttribute("aria-expanded", open ? "true" : "false");
-        toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
-        iconMenu.style.display = open ? "none" : "block";
-        iconClose.style.display = open ? "block" : "none";
-        document.body.style.overflow = open ? "hidden" : "";
+    function status(key, value) {
+      const r = RANGES[key];
+      const span = r.max - r.min;
+      if (value < r.min - span * 0.15 || value > r.max + span * 0.15) return "critical";
+      if (value < r.min || value > r.max) return "warn";
+      return "ok";
+    }
+    function clamp(n, a, b) { return Math.min(b, Math.max(a, n)); }
+    function jitter(n, a) { return n + (Math.random() - 0.5) * a; }
+    function fmt(n, d) { return Number(n).toFixed(d); }
+
+    const systems = [
+      {
+        id: "sys-basil-nft", name: "Basil NFT Line", crop: "Basil", variety: "Genovese", method: "NFT",
+        stage: "vegetative", location: "Balcony — Bay Ridge", day: 21, days: 35, hue: 140, plants: 18, liters: 40,
+        notes: "High turnover herb line for weekend market.",
+        current: { ph: 6.1, ec: 1.6, tds: 800, waterTemp: 20.4, airTemp: 24.1, humidity: 52, waterLevel: 78, ppfd: 340, dissolvedOxygen: 7.8 },
+        nutrients: [
+          { key: "N", label: "Nitrogen", ppm: 165, min: 120, max: 180 },
+          { key: "P", label: "Phosphorus", ppm: 50, min: 40, max: 70 },
+          { key: "K", label: "Potassium", ppm: 210, min: 160, max: 240 },
+          { key: "Ca", label: "Calcium", ppm: 140, min: 100, max: 180 },
+          { key: "Mg", label: "Magnesium", ppm: 45, min: 30, max: 60 },
+          { key: "Fe", label: "Iron", ppm: 2.4, min: 1.5, max: 3.5 },
+        ],
+        light: { on: true, hours: 16, ppfdTarget: 350, spectrum: "veg" },
+        automations: [
+          { id: "auto-ph", label: "pH balance", enabled: true, desc: "Hold 5.8–6.2 with pH up/down" },
+          { id: "auto-dose", label: "Nutrient top-up", enabled: true, desc: "Maintain EC with A/B stock" },
+          { id: "auto-topoff", label: "Reservoir top-off", enabled: true, desc: "Add RO water below 55%" },
+          { id: "auto-aerate", label: "Aeration boost", enabled: false, desc: "Air stones when DO is low" },
+        ],
+      },
+      {
+        id: "sys-lettuce-dwc", name: "Butterhead DWC Raft", crop: "Lettuce", variety: "Buttercrunch", method: "DWC",
+        stage: "vegetative", location: "Basement rack A", day: 13, days: 28, hue: 95, plants: 24, liters: 80,
+        notes: "Cooler water keeps tip burn down.",
+        current: { ph: 5.7, ec: 1.3, tds: 650, waterTemp: 19.2, airTemp: 21.5, humidity: 58, waterLevel: 64, ppfd: 280, dissolvedOxygen: 6.2 },
+        nutrients: [
+          { key: "N", label: "Nitrogen", ppm: 130, min: 120, max: 180 },
+          { key: "P", label: "Phosphorus", ppm: 45, min: 40, max: 70 },
+          { key: "K", label: "Potassium", ppm: 180, min: 160, max: 240 },
+          { key: "Ca", label: "Calcium", ppm: 160, min: 100, max: 180 },
+          { key: "Mg", label: "Magnesium", ppm: 45, min: 30, max: 60 },
+          { key: "Fe", label: "Iron", ppm: 2.0, min: 1.5, max: 3.5 },
+        ],
+        light: { on: true, hours: 14, ppfdTarget: 300, spectrum: "full" },
+        automations: [
+          { id: "auto-ph", label: "pH balance", enabled: true, desc: "Hold 5.8–6.2 with pH up/down" },
+          { id: "auto-dose", label: "Nutrient top-up", enabled: true, desc: "Maintain EC with A/B stock" },
+          { id: "auto-topoff", label: "Reservoir top-off", enabled: true, desc: "Add RO water below 55%" },
+          { id: "auto-aerate", label: "Aeration boost", enabled: true, desc: "Air stones when DO is low" },
+        ],
+      },
+      {
+        id: "sys-tomato-drip", name: "Cherry Tomato Drip", crop: "Tomato", variety: "Sungold", method: "Drip",
+        stage: "flowering", location: "Rooftop greenhouse", day: 62, days: 75, hue: 12, plants: 8, liters: 120,
+        notes: "Bloom formula — watch calcium for blossom end rot.",
+        current: { ph: 6.4, ec: 2.3, tds: 1150, waterTemp: 22.8, airTemp: 26.4, humidity: 48, waterLevel: 71, ppfd: 520, dissolvedOxygen: 7.1 },
+        nutrients: [
+          { key: "N", label: "Nitrogen", ppm: 140, min: 120, max: 180 },
+          { key: "P", label: "Phosphorus", ppm: 70, min: 40, max: 70 },
+          { key: "K", label: "Potassium", ppm: 250, min: 160, max: 240 },
+          { key: "Ca", label: "Calcium", ppm: 180, min: 100, max: 180 },
+          { key: "Mg", label: "Magnesium", ppm: 50, min: 30, max: 60 },
+          { key: "Fe", label: "Iron", ppm: 2.2, min: 1.5, max: 3.5 },
+        ],
+        light: { on: true, hours: 14, ppfdTarget: 550, spectrum: "bloom" },
+        automations: [
+          { id: "auto-ph", label: "pH balance", enabled: true, desc: "Hold 5.8–6.2 with pH up/down" },
+          { id: "auto-dose", label: "Nutrient top-up", enabled: true, desc: "Maintain EC with A/B stock" },
+          { id: "auto-topoff", label: "Reservoir top-off", enabled: true, desc: "Add RO water below 55%" },
+          { id: "auto-aerate", label: "Aeration boost", enabled: false, desc: "Air stones when DO is low" },
+        ],
+      },
+      {
+        id: "sys-strawberry", name: "Strawberry Tower", crop: "Strawberry", variety: "Albion", method: "Drip",
+        stage: "flowering", location: "South window array", day: 78, days: 90, hue: 350, plants: 12, liters: 30,
+        notes: "Keep EC steady during fruit set.",
+        current: { ph: 5.9, ec: 1.9, tds: 950, waterTemp: 21.0, airTemp: 23.2, humidity: 55, waterLevel: 82, ppfd: 400, dissolvedOxygen: 7.5 },
+        nutrients: [
+          { key: "N", label: "Nitrogen", ppm: 110, min: 120, max: 180 },
+          { key: "P", label: "Phosphorus", ppm: 55, min: 40, max: 70 },
+          { key: "K", label: "Potassium", ppm: 220, min: 160, max: 240 },
+          { key: "Ca", label: "Calcium", ppm: 140, min: 100, max: 180 },
+          { key: "Mg", label: "Magnesium", ppm: 45, min: 30, max: 60 },
+          { key: "Fe", label: "Iron", ppm: 2.8, min: 1.5, max: 3.5 },
+        ],
+        light: { on: true, hours: 14, ppfdTarget: 420, spectrum: "bloom" },
+        automations: [
+          { id: "auto-ph", label: "pH balance", enabled: true, desc: "Hold 5.8–6.2" },
+          { id: "auto-dose", label: "Nutrient top-up", enabled: true, desc: "Maintain EC" },
+          { id: "auto-topoff", label: "Reservoir top-off", enabled: true, desc: "Top off below 55%" },
+          { id: "auto-aerate", label: "Aeration boost", enabled: false, desc: "Air stones when DO is low" },
+        ],
+      },
+      {
+        id: "sys-classroom", name: "Classroom Hydro Kit", crop: "Pea shoots", variety: "Dwarf gray sugar", method: "Kratky",
+        stage: "seedling", location: "PS 102 science lab", day: 5, days: 14, hue: 85, plants: 36, liters: 12,
+        notes: "Educational passive system — no pump required.",
+        current: { ph: 6.0, ec: 1.1, tds: 550, waterTemp: 21.5, airTemp: 22.0, humidity: 50, waterLevel: 88, ppfd: 220, dissolvedOxygen: 5.8 },
+        nutrients: [
+          { key: "N", label: "Nitrogen", ppm: 100, min: 120, max: 180 },
+          { key: "P", label: "Phosphorus", ppm: 40, min: 40, max: 70 },
+          { key: "K", label: "Potassium", ppm: 150, min: 160, max: 240 },
+          { key: "Ca", label: "Calcium", ppm: 120, min: 100, max: 180 },
+          { key: "Mg", label: "Magnesium", ppm: 40, min: 30, max: 60 },
+          { key: "Fe", label: "Iron", ppm: 1.8, min: 1.5, max: 3.5 },
+        ],
+        light: { on: true, hours: 12, ppfdTarget: 250, spectrum: "full" },
+        automations: [
+          { id: "auto-ph", label: "pH balance", enabled: false, desc: "Manual for lessons" },
+          { id: "auto-dose", label: "Nutrient top-up", enabled: false, desc: "Manual for lessons" },
+          { id: "auto-topoff", label: "Reservoir top-off", enabled: false, desc: "Manual for lessons" },
+          { id: "auto-aerate", label: "Aeration boost", enabled: false, desc: "Passive Kratky" },
+        ],
+      },
+    ];
+
+    const recipes = [
+      { crop: "Basil (Genovese)", method: "NFT", ph: "5.8–6.5", ec: "1.4–1.8", light: "16h", ppfd: "350", days: 35, yield: 420, tips: ["Pinch tops at 4 nodes to bush out", "Keep water under 24°C", "Iron chelate if new leaves yellow"], nuts: { N: 160, P: 50, K: 200, Fe: 2.5 } },
+      { crop: "Butterhead lettuce", method: "DWC", ph: "5.5–6.2", ec: "1.0–1.4", light: "14h", ppfd: "280", days: 28, yield: 680, tips: ["Cool root zone prevents tip burn", "Harvest outer leaves continuously", "DO above 6 mg/L for dense heads"], nuts: { N: 130, P: 45, K: 180, Ca: 150 } },
+      { crop: "Cherry tomato", method: "Drip", ph: "5.8–6.5", ec: "2.0–2.6", light: "14h", ppfd: "550", days: 75, yield: 2400, tips: ["Raise EC after fruit set", "Calcium critical during flowering", "Support vines early"], nuts: { N: 140, P: 70, K: 250, Ca: 180 } },
+      { crop: "Day-neutral strawberry", method: "Drip", ph: "5.5–6.2", ec: "1.6–2.0", light: "14h", ppfd: "400", days: 90, yield: 900, tips: ["Remove runners to push fruit", "Steady moisture beats wet-dry swings", "Watch powdery mildew if humidity spikes"], nuts: { N: 110, P: 55, K: 220 } },
+      { crop: "Pea shoots (classroom)", method: "Kratky", ph: "5.8–6.5", ec: "0.9–1.3", light: "12h", ppfd: "220", days: 14, yield: 180, tips: ["No pump — great for first lessons", "Harvest at 8–12 cm", "Log pH daily as a student experiment"], nuts: { N: 100, P: 40, K: 150 } },
+      { crop: "Spearmint", method: "DWC", ph: "5.5–6.5", ec: "1.4–1.8", light: "16h", ppfd: "300", days: 30, yield: 500, tips: ["Aggressive grower — isolate runners", "Lower N slightly for stronger aroma"], nuts: { N: 140, K: 190 } },
+    ];
+
+    const market = [
+      { name: "Genovese basil bunch", vendor: "Ridge Hydro Co-op", hood: "Bay Ridge", miles: 1.2, price: 4.5, unit: "bunch", cat: "produce", organic: true, desc: "Cut this morning from NFT lines — fragrant and soft-stemmed." },
+      { name: "Butterhead heads (3-pack)", vendor: "Cellar Greens", hood: "Sunset Park", miles: 2.4, price: 7, unit: "pack", cat: "produce", organic: true, desc: "Crisp DWC butterheads, no grit, ready for salad." },
+      { name: "Starter NFT grow kit", vendor: "Autobotanist Hardware", hood: "Local hub", miles: 0.5, price: 189, unit: "kit", cat: "kit", organic: false, desc: "Modular channel, pump, sensors, and app pairing — fits a balcony." },
+      { name: "A/B nutrient concentrate", vendor: "Autobotanist Hardware", hood: "Local hub", miles: 0.5, price: 28, unit: "set", cat: "nutrient", organic: false, desc: "Two-part formula for leafy greens and herbs." },
+      { name: "Classroom hydro sensor kit", vendor: "Green Futures Fund", hood: "Borough-wide", miles: 3.1, price: 64, unit: "kit", cat: "educational", organic: false, desc: "pH + EC probes, lesson cards, and conservation activities for ages 8–14." },
+      { name: "Sungold cherry tomatoes", vendor: "Rooftop Sungold", hood: "Red Hook", miles: 4.2, price: 6.5, unit: "pint", cat: "produce", organic: true, desc: "Peak sugar from drip-fed vines — same-day market drop." },
+    ];
+
+    let selectedId = null;
+    let dismissed = new Set();
+
+    function collectAlerts() {
+      const out = [];
+      for (const s of systems) {
+        for (const key of ["ph", "ec", "waterTemp", "waterLevel", "dissolvedOxygen", "ppfd"]) {
+          const st = status(key, s.current[key]);
+          if (st === "ok") continue;
+          const r = RANGES[key];
+          const id = s.id + "-" + key;
+          if (dismissed.has(id)) continue;
+          out.push({ id, systemId: s.id, severity: st, title: s.name + ": " + r.label, message: r.label + " is " + s.current[key] + (r.unit ? " " + r.unit : "") + " (target " + r.min + "–" + r.max + ")." });
+        }
+        for (const n of s.nutrients) {
+          let st = "ok";
+          if (n.ppm < n.min * 0.7 || n.ppm > n.max * 1.3) st = "critical";
+          else if (n.ppm < n.min || n.ppm > n.max) st = "warn";
+          if (st === "ok") continue;
+          const id = s.id + "-nut-" + n.key;
+          if (dismissed.has(id)) continue;
+          out.push({ id, systemId: s.id, severity: st, title: s.name + ": " + n.label, message: n.label + " at " + n.ppm.toFixed(1) + " ppm (target " + n.min + "–" + n.max + ")." });
+        }
       }
+      out.sort((a, b) => (a.severity === "critical" ? 0 : 1) - (b.severity === "critical" ? 0 : 1));
+      return out;
+    }
 
-      toggle.addEventListener("click", function () { setOpen(!open); });
-      document.querySelectorAll("#mobile-nav a").forEach(function (a) {
-        a.addEventListener("click", function () { setOpen(false); });
+    function tickSystem(s) {
+      const c = s.current;
+      let ph = jitter(c.ph, 0.04);
+      let ec = jitter(c.ec, 0.03);
+      let waterLevel = c.waterLevel - Math.random() * 0.08;
+      let waterTemp = jitter(c.waterTemp, 0.15);
+      let airTemp = jitter(c.airTemp, 0.2);
+      let humidity = jitter(c.humidity, 0.6);
+      let dissolvedOxygen = jitter(c.dissolvedOxygen, 0.08);
+      let ppfd = c.ppfd + ((s.light.on ? s.light.ppfdTarget : 0) - c.ppfd) * 0.35 + (Math.random() - 0.5) * 8;
+      for (const a of s.automations) {
+        if (!a.enabled) continue;
+        if (a.id === "auto-ph") ph += (6.0 - ph) * 0.12;
+        if (a.id === "auto-dose" && ec < 1.65) ec += 0.04;
+        if (a.id === "auto-topoff" && waterLevel < 55) waterLevel += 8;
+        if (a.id === "auto-aerate" && dissolvedOxygen < 6.5) dissolvedOxygen += 0.15;
+      }
+      for (const n of s.nutrients) {
+        const burn = s.light.on ? 0.15 + Math.random() * 0.25 : 0.05;
+        n.ppm = clamp(n.ppm - burn + (Math.random() - 0.5) * 0.4, 0, n.max * 1.4);
+      }
+      const nSum = s.nutrients.reduce((x, n) => x + n.ppm, 0);
+      ec = clamp(ec * 0.92 + (nSum / 900) * 0.08, 0.4, 3.5);
+      s.current = {
+        ph: +clamp(ph, 4.2, 8.2).toFixed(2),
+        ec: +ec.toFixed(2),
+        tds: Math.round(ec * 500),
+        waterTemp: +clamp(waterTemp, 12, 32).toFixed(1),
+        airTemp: +clamp(airTemp, 12, 36).toFixed(1),
+        humidity: Math.round(clamp(humidity, 20, 95)),
+        waterLevel: +clamp(waterLevel, 8, 100).toFixed(1),
+        ppfd: Math.round(clamp(ppfd, 0, 900)),
+        dissolvedOxygen: +clamp(dissolvedOxygen, 2, 14).toFixed(1),
+      };
+    }
+
+    function toast(msg) {
+      const el = document.getElementById("toast");
+      el.textContent = msg;
+      el.classList.add("show");
+      clearTimeout(toast._t);
+      toast._t = setTimeout(() => el.classList.remove("show"), 2200);
+    }
+
+    function badgeForCat(cat) {
+      if (cat === "produce") return "badge-success";
+      if (cat === "kit") return "badge-sensor";
+      if (cat === "educational") return "badge-soft";
+      return "badge-secondary";
+    }
+
+    function renderHomeSnap() {
+      const s = systems[0];
+      document.getElementById("snapName").textContent = s.name;
+      document.getElementById("statSystems").textContent = systems.length;
+      const avg = systems.reduce((a, x) => a + x.current.ph, 0) / systems.length;
+      document.getElementById("statPh").textContent = avg.toFixed(2);
+      document.getElementById("statAlerts").textContent = collectAlerts().length;
+      const n = s.nutrients;
+      document.getElementById("snapBody").innerHTML = [
+        ["pH", fmt(s.current.ph, 2)],
+        ["EC", fmt(s.current.ec, 2) + " mS"],
+        ["PPFD", s.current.ppfd + " µmol"],
+        ["N-P-K", Math.round(n[0].ppm) + "-" + Math.round(n[1].ppm) + "-" + Math.round(n[2].ppm)],
+        ["Water", Math.round(s.current.waterLevel) + "%"],
+        ["Lights", s.light.on ? "On" : "Off"],
+      ].map(([k, v]) => `<div class="snap-cell"><span>${k}</span><strong class="tabular">${v}</strong></div>`).join("");
+    }
+
+    function renderSystems() {
+      const alerts = collectAlerts();
+      const grid = document.getElementById("systemGrid");
+      grid.innerHTML = systems.map((s) => {
+        const ac = alerts.filter((a) => a.systemId === s.id).length;
+        const progress = Math.min(100, Math.round((s.day / s.days) * 100));
+        return `<article class="card system-card" data-open="${s.id}">
+          <div class="system-card-hero" style="background:linear-gradient(135deg,hsl(${s.hue} 28% 28%),hsl(${s.hue + 30} 22% 42%))">
+            <div>
+              <span class="badge badge-secondary" style="background:color-mix(in oklab,#fffcf7 90%,transparent);color:var(--fg)">${s.method}</span>
+              <h3 style="margin-top:0.45rem;font-size:1.1rem;color:#fffcf7">${s.name}</h3>
+            </div>
+          </div>
+          <div class="system-card-body">
+            <div style="display:flex;justify-content:space-between;gap:0.5rem;align-items:flex-start">
+              <div>
+                <p class="muted" style="font-size:0.9rem">${s.crop} · ${s.variety}</p>
+                <p class="subtle" style="font-size:0.75rem;margin-top:0.15rem">${s.location}</p>
+              </div>
+              <span class="badge ${ac ? "badge-danger" : "badge-success"}">${ac ? ac + " alert" + (ac > 1 ? "s" : "") : "Stable"}</span>
+            </div>
+            <div class="metric-mini">
+              <div><span>pH</span><strong class="tabular">${fmt(s.current.ph, 2)}</strong></div>
+              <div><span>EC</span><strong class="tabular">${fmt(s.current.ec, 2)}</strong></div>
+              <div><span>Day</span><strong class="tabular">${s.day}/${s.days}</strong></div>
+            </div>
+            <div style="margin-top:0.75rem">
+              <div style="display:flex;justify-content:space-between;font-size:0.7rem;color:var(--muted)"><span>Cycle progress</span><span class="tabular">${progress}%</span></div>
+              <div class="bar ok" style="margin-top:0.3rem"><i style="width:${progress}%"></i></div>
+            </div>
+            <p style="margin-top:0.75rem;font-size:0.8rem;font-weight:500;color:var(--primary)">Open system →</p>
+          </div>
+        </article>`;
+      }).join("");
+
+      const panel = document.getElementById("alertsPanel");
+      const open = alerts.slice(0, 8);
+      panel.innerHTML = `<h3 style="font-size:1rem;margin-bottom:0.75rem">Alerts ${open.length ? "(" + open.length + ")" : ""}</h3>` +
+        (open.length === 0
+          ? `<div class="alert-item ok">All systems within target bands.</div>`
+          : open.map((a) => `<div class="alert-item ${a.severity}"><div style="flex:1;min-width:0"><p style="font-size:0.875rem;font-weight:500">${a.title}</p><p class="muted" style="font-size:0.75rem;margin-top:0.15rem">${a.message}</p></div><button class="btn btn-sm btn-ghost" data-dismiss="${a.id}">Dismiss</button></div>`).join(""));
+
+      grid.querySelectorAll("[data-open]").forEach((el) => el.addEventListener("click", () => openDetail(el.getAttribute("data-open"))));
+      panel.querySelectorAll("[data-dismiss]").forEach((el) => el.addEventListener("click", () => {
+        dismissed.add(el.getAttribute("data-dismiss"));
+        renderSystems();
+        if (selectedId) openDetail(selectedId);
+      }));
+    }
+
+    function openDetail(id) {
+      selectedId = id;
+      const s = systems.find((x) => x.id === id);
+      if (!s) return;
+      document.getElementById("growList").hidden = true;
+      const detail = document.getElementById("growDetail");
+      detail.hidden = false;
+      const progress = Math.min(100, Math.round((s.day / s.days) * 100));
+      const metrics = Object.keys(RANGES);
+      const alerts = collectAlerts().filter((a) => a.systemId === s.id);
+
+      detail.innerHTML = `
+        <button class="back-link" id="backGrow">← All systems</button>
+        <div style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:flex-start">
+          <div>
+            <div style="display:flex;flex-wrap:wrap;gap:0.4rem">
+              <span class="badge badge-soft">${s.method}</span>
+              <span class="badge badge-secondary">${s.stage}</span>
+              <span class="badge badge-sensor">${s.plants} plants</span>
+            </div>
+            <h1 style="margin-top:0.5rem;font-size:clamp(1.6rem,3vw,2rem)">${s.name}</h1>
+            <p class="muted" style="margin-top:0.25rem;font-size:0.9rem">${s.crop} · ${s.variety} · ${s.location}</p>
+          </div>
+          <div class="detail-actions">
+            <button class="btn btn-sm btn-outline" data-act="ph-down">pH down</button>
+            <button class="btn btn-sm btn-outline" data-act="ph-up">pH up</button>
+            <button class="btn btn-sm btn-soft" data-act="topoff">Top off water</button>
+            <button class="btn btn-sm btn-primary" data-act="dose">Dose nutrients</button>
+          </div>
+        </div>
+        <div class="card" style="margin-top:1.25rem;padding:1.1rem">
+          <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:0.5rem">
+            <div><p class="subtle" style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.04em">Grow cycle</p><p class="tabular" style="margin-top:0.25rem;font-size:1.1rem">Day ${s.day} of ${s.days}</p></div>
+            <p class="muted" style="font-size:0.9rem">Reservoir ${s.liters}L</p>
+          </div>
+          <div class="bar ok" style="margin-top:0.65rem"><i style="width:${progress}%"></i></div>
+          ${s.notes ? `<p class="muted" style="margin-top:0.75rem;font-size:0.9rem">${s.notes}</p>` : ""}
+        </div>
+        <div class="sensor-grid" style="margin-top:1.25rem">
+          ${metrics.map((key) => {
+            const r = RANGES[key];
+            const v = s.current[key];
+            const st = status(key, v);
+            const span = r.max - r.min || 1;
+            const pct = Math.min(100, Math.max(4, ((v - (r.min - span * 0.2)) / (span * 1.4)) * 100));
+            const digits = key === "ph" || key === "ec" ? 2 : (key === "tds" || key === "ppfd" || key === "humidity" ? 0 : 1);
+            return `<div class="card sensor-card">
+              <div class="top">
+                <div><p class="label">${r.label}</p><p class="value tabular">${fmt(v, digits)}${r.unit ? `<small>${r.unit}</small>` : ""}</p></div>
+                <span class="badge badge-${st === "ok" ? "success" : st}">${st === "ok" ? "In range" : st === "warn" ? "Watch" : "Action needed"}</span>
+              </div>
+              <div class="bar ${st}"><i style="width:${pct}%"></i></div>
+              <p class="subtle" style="margin-top:0.45rem;font-size:0.7rem">Target ${r.min}${r.unit} – ${r.max}${r.unit}</p>
+            </div>`;
+          }).join("")}
+        </div>
+        <div style="margin-top:1.5rem;display:grid;gap:1.25rem" class="lg-2 grid-2">
+          <div class="card" style="padding:1.2rem">
+            <div style="display:flex;justify-content:space-between;gap:0.75rem;align-items:flex-start;flex-wrap:wrap">
+              <div><h3 style="font-size:1.1rem">Reservoir nutrients</h3><p class="muted" style="font-size:0.85rem;margin-top:0.25rem">Parts-per-million of the main hydro elements.</p></div>
+              <button class="btn btn-sm btn-soft" data-act="dose">Dose nutrients</button>
+            </div>
+            <div class="nutrient-grid" style="margin-top:1rem">
+              ${s.nutrients.map((n) => {
+                let st = "ok";
+                if (n.ppm < n.min * 0.7 || n.ppm > n.max * 1.3) st = "critical";
+                else if (n.ppm < n.min || n.ppm > n.max) st = "warn";
+                const pct = Math.min(100, Math.max(4, (n.ppm / (n.max * 1.15)) * 100));
+                return `<div class="nut-item">
+                  <div style="display:flex;justify-content:space-between;gap:0.5rem">
+                    <div><p style="font-size:0.9rem;font-weight:500">${n.key} <span class="muted" style="font-weight:400">· ${n.label}</span></p>
+                    <p class="tabular" style="margin-top:0.2rem;font-size:1.1rem">${n.key === "Fe" ? n.ppm.toFixed(1) : Math.round(n.ppm)} <span class="muted" style="font-size:0.72rem;font-family:var(--font-sans)">ppm</span></p></div>
+                    <span class="badge badge-${st === "ok" ? "success" : st}">${st === "ok" ? "In range" : st === "warn" ? "Watch" : "Action"}</span>
+                  </div>
+                  <div class="progress"><i style="width:${pct}%;background:${st === "ok" ? "var(--success)" : st === "warn" ? "var(--warn)" : "var(--danger)"}"></i></div>
+                  <p class="subtle" style="margin-top:0.35rem;font-size:0.7rem">Ideal ${n.min}–${n.max}</p>
+                </div>`;
+              }).join("")}
+            </div>
+          </div>
+          <div style="display:grid;gap:1.25rem">
+            <div class="card" style="padding:1.2rem">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:0.75rem">
+                <div><h3 style="font-size:1.1rem">Light & photoperiod</h3><p class="muted" style="font-size:0.85rem;margin-top:0.25rem">PPFD and daily light targets for this crop stage.</p></div>
+                <span class="badge ${s.light.on ? "badge-success" : "badge-secondary"}">${s.light.on ? "Lights on" : "Lights off"}</span>
+              </div>
+              <div style="margin-top:1rem;display:flex;justify-content:space-between;align-items:center;border:1px solid var(--border);border-radius:0.85rem;padding:0.85rem;background:color-mix(in oklab,var(--surface-2) 50%,transparent)">
+                <div><p style="font-weight:500;font-size:0.9rem">Grow lights</p><p class="muted" style="font-size:0.75rem">${s.light.hours}h / day · ${s.light.spectrum} spectrum · target ${s.light.ppfdTarget} µmol</p></div>
+                <button class="switch ${s.light.on ? "on" : ""}" data-act="lights" aria-label="Toggle lights"></button>
+              </div>
+              <p class="subtle" style="margin-top:0.75rem;font-size:0.8rem">Live PPFD ${s.current.ppfd} µmol · canopy average</p>
+            </div>
+            <div class="card" style="padding:1.2rem">
+              <h3 style="font-size:1.1rem;margin-bottom:0.75rem">Automations</h3>
+              ${s.automations.map((a) => `
+                <div style="display:flex;justify-content:space-between;gap:0.75rem;align-items:flex-start;border:1px solid var(--border);border-radius:0.85rem;padding:0.75rem;margin-bottom:0.5rem">
+                  <div><p style="font-size:0.9rem;font-weight:500">${a.label}</p><p class="muted" style="font-size:0.75rem;margin-top:0.15rem">${a.desc}</p></div>
+                  <button class="switch ${a.enabled ? "on" : ""}" data-auto="${a.id}" aria-label="Toggle ${a.label}"></button>
+                </div>`).join("")}
+            </div>
+            <div class="card" style="padding:1.2rem">
+              <h3 style="font-size:1.1rem;margin-bottom:0.75rem">Alerts</h3>
+              ${alerts.length === 0 ? `<div class="alert-item ok">All metrics in range.</div>` :
+                alerts.map((a) => `<div class="alert-item ${a.severity}"><div style="flex:1"><p style="font-size:0.875rem;font-weight:500">${a.title}</p><p class="muted" style="font-size:0.75rem;margin-top:0.15rem">${a.message}</p></div></div>`).join("")}
+            </div>
+          </div>
+        </div>
+      `;
+
+      document.getElementById("backGrow").onclick = () => {
+        selectedId = null;
+        detail.hidden = true;
+        document.getElementById("growList").hidden = false;
+        renderSystems();
+      };
+      detail.querySelectorAll("[data-act]").forEach((btn) => btn.addEventListener("click", () => {
+        const act = btn.getAttribute("data-act");
+        if (act === "ph-up") { s.current.ph = +clamp(s.current.ph + 0.2, 4.5, 8).toFixed(2); toast("pH up dosed"); }
+        if (act === "ph-down") { s.current.ph = +clamp(s.current.ph - 0.2, 4.5, 8).toFixed(2); toast("pH down dosed"); }
+        if (act === "topoff") {
+          s.current.waterLevel = Math.min(100, s.current.waterLevel + 20);
+          s.current.ec = +Math.max(0.5, s.current.ec - 0.08).toFixed(2);
+          s.current.tds = Math.round(s.current.ec * 500);
+          toast("Reservoir topped off");
+        }
+        if (act === "dose") {
+          for (const n of s.nutrients) n.ppm = Math.min(n.max * 0.95, n.ppm + (n.max - n.min) * 0.35);
+          s.current.ec = +Math.min(2.8, s.current.ec + 0.25).toFixed(2);
+          s.current.tds = Math.round(s.current.ec * 500);
+          toast("Nutrient stock dosed");
+        }
+        if (act === "lights") { s.light.on = !s.light.on; toast("Light schedule updated"); }
+        openDetail(s.id);
+        renderHomeSnap();
+      }));
+      detail.querySelectorAll("[data-auto]").forEach((btn) => btn.addEventListener("click", () => {
+        const a = s.automations.find((x) => x.id === btn.getAttribute("data-auto"));
+        if (a) a.enabled = !a.enabled;
+        openDetail(s.id);
+      }));
+    }
+
+    function renderRecipes() {
+      document.getElementById("recipeGrid").innerHTML = recipes.map((r) => `
+        <div class="card recipe">
+          <div style="display:flex;flex-wrap:wrap;gap:0.4rem">
+            <span class="badge badge-soft">${r.method}</span>
+            <span class="badge badge-secondary">${r.days} days</span>
+          </div>
+          <h3>${r.crop}</h3>
+          <div class="recipe-stats">
+            <div><span>pH</span><strong class="tabular">${r.ph}</strong></div>
+            <div><span>EC</span><strong class="tabular">${r.ec}</strong></div>
+            <div><span>Light</span><strong class="tabular">${r.light}</strong></div>
+            <div><span>PPFD</span><strong class="tabular">${r.ppfd}</strong></div>
+          </div>
+          <div style="margin-top:0.85rem;display:flex;flex-wrap:wrap;gap:0.35rem">
+            ${Object.entries(r.nuts).map(([k, v]) => `<span class="badge badge-outline tabular">${k} ${v}</span>`).join("")}
+          </div>
+          <ul class="tips">${r.tips.map((t) => `<li>${t}</li>`).join("")}</ul>
+          <div style="margin-top:0.9rem;border:1px solid var(--border);border-radius:0.75rem;padding:0.75rem;background:color-mix(in oklab,var(--surface-2) 60%,transparent)">
+            <p class="muted" style="font-size:0.75rem">Community avg yield</p>
+            <p class="tabular" style="margin-top:0.2rem;font-size:1.1rem;font-weight:500">${r.yield} g / cycle</p>
+          </div>
+        </div>`).join("");
+    }
+
+    function renderMarket() {
+      document.getElementById("marketGrid").innerHTML = market.map((p) => `
+        <div class="card product">
+          <div style="display:flex;justify-content:space-between;gap:0.5rem">
+            <span class="badge ${badgeForCat(p.cat)}">${p.cat}</span>
+            ${p.organic ? `<span class="badge badge-outline">Organic</span>` : ""}
+          </div>
+          <h3>${p.name}</h3>
+          <p class="desc">${p.desc}</p>
+          <p class="meta">${p.vendor} · ${p.hood} · ${p.miles} mi</p>
+          <div class="foot">
+            <p class="tabular" style="font-size:1.25rem;font-weight:500">$${p.price.toFixed(2)} <span class="muted" style="font-size:0.75rem;font-family:var(--font-sans);font-weight:400">/ ${p.unit}</span></p>
+            <button class="btn btn-sm btn-primary" data-add="${p.name}">Add</button>
+          </div>
+        </div>`).join("");
+      document.querySelectorAll("[data-add]").forEach((b) => b.addEventListener("click", () => toast("Added " + b.getAttribute("data-add") + " to cart (demo)")));
+    }
+
+    // Navigation
+    const views = ["home", "grow", "data", "market", "about"];
+    function showView(name) {
+      if (!views.includes(name)) name = "home";
+      views.forEach((v) => {
+        document.getElementById("view-" + v).classList.toggle("active", v === name);
       });
-
-      function onScroll() {
-        header.classList.toggle("is-scrolled", window.scrollY > 12);
+      document.querySelectorAll("[data-nav]").forEach((a) => {
+        a.classList.toggle("active", a.getAttribute("data-nav") === name);
+      });
+      if (name !== "grow") {
+        selectedId = null;
+        document.getElementById("growDetail").hidden = true;
+        document.getElementById("growList").hidden = false;
       }
-      onScroll();
-      window.addEventListener("scroll", onScroll, { passive: true });
-    })();
+      if (name === "grow") renderSystems();
+      window.scrollTo(0, 0);
+      document.getElementById("mobileNav").classList.remove("open");
+      document.getElementById("menuBtn").setAttribute("aria-expanded", "false");
+    }
+
+    function routeFromHash() {
+      const h = (location.hash || "#home").replace("#", "").split("/")[0];
+      showView(h || "home");
+    }
+
+    document.querySelectorAll("[data-nav]").forEach((a) => {
+      a.addEventListener("click", (e) => {
+        const nav = a.getAttribute("data-nav");
+        if (!nav) return;
+        e.preventDefault();
+        location.hash = nav;
+      });
+    });
+    window.addEventListener("hashchange", routeFromHash);
+
+    document.getElementById("menuBtn").addEventListener("click", () => {
+      const nav = document.getElementById("mobileNav");
+      const open = !nav.classList.contains("open");
+      nav.classList.toggle("open", open);
+      document.getElementById("menuBtn").setAttribute("aria-expanded", String(open));
+    });
+
+    // Init
+    renderHomeSnap();
+    renderSystems();
+    renderRecipes();
+    renderMarket();
+    routeFromHash();
+
+    setInterval(() => {
+      systems.forEach(tickSystem);
+      renderHomeSnap();
+      if (document.getElementById("view-grow").classList.contains("active")) {
+        if (selectedId) openDetail(selectedId);
+        else renderSystems();
+      }
+    }, 3000);
+
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("sw.js").catch(() => {});
+    }
+  })();
   </script>
 </body>
 </html>
